@@ -1,5 +1,8 @@
 # Simple Weather application
-<p>Very simple weather application</p>
+<p>Very simple weather application for Android</p>
+
+### Application design
+![Application design](https://github.com/Dimowner/SimpleWeather/blob/master/art/simple_weather_design.png)
 
 ### License
 
