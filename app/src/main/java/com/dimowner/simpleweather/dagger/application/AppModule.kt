@@ -21,6 +21,9 @@ package com.dimowner.simpleweather.dagger.application
 
 import android.content.Context
 import com.dimowner.simpleweather.data.Prefs
+import com.dimowner.simpleweather.data.remote.RestClient
+import com.dimowner.simpleweather.data.repository.Repository
+import com.dimowner.simpleweather.data.repository.RepositoryImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -42,4 +45,15 @@ class AppModule(
 		return Prefs(context)
 	}
 
+	@Provides
+	@Singleton
+	internal fun provideRestClient(): RestClient {
+		return RestClient()
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideRepository(restClient: RestClient): Repository {
+		return RepositoryImpl(restClient.weatherApi)
+	}
 }

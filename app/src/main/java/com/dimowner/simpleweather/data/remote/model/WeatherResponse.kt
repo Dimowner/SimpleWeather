@@ -17,22 +17,33 @@
  * the License.
  */
 
-package com.dimowner.simpleweather.dagger.application
+package com.dimowner.simpleweather.data.remote.model
 
-import com.dimowner.simpleweather.presentation.ui.MainActivity
-import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.presentation.ui.WeatherDetailsFragment
-import dagger.Component
-import javax.inject.Singleton
+import com.google.gson.annotations.SerializedName
 
-@Component(modules = arrayOf(AppModule::class))
-@Singleton
-interface AppComponent {
-
-	fun inject(app: SWApplication)
-
-	fun inject(activity: MainActivity)
-
-	fun inject(activity: WeatherDetailsFragment)
-
-}
+data class WeatherResponse(
+		@SerializedName("id")
+		val id : Long,
+		@SerializedName("name")
+		val name : String,
+		@SerializedName("coord")
+		val coord: Coord,
+		@SerializedName("weather")
+		val weather: Array<Weather>,
+		@SerializedName("base")
+		val base: String,
+		@SerializedName("main")
+		val main: Main,
+		@SerializedName("visibility")
+		val visibility: String,
+		@SerializedName("wind")
+		val wind: Wind,
+		@SerializedName("clouds")
+		val clouds: Clouds,
+		@SerializedName("dt")
+		val dt: Long,
+		@SerializedName("sys")
+		val sys: Sys,
+		@SerializedName("cod")
+		val cod: Int
+)

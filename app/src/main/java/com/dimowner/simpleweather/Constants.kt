@@ -17,22 +17,10 @@
  * the License.
  */
 
-package com.dimowner.simpleweather.dagger.application
+package com.dimowner.simpleweather
 
-import com.dimowner.simpleweather.presentation.ui.MainActivity
-import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.presentation.ui.WeatherDetailsFragment
-import dagger.Component
-import javax.inject.Singleton
-
-@Component(modules = arrayOf(AppModule::class))
-@Singleton
-interface AppComponent {
-
-	fun inject(app: SWApplication)
-
-	fun inject(activity: MainActivity)
-
-	fun inject(activity: WeatherDetailsFragment)
-
+class Constants {
+	companion object {
+		const val OPEN_WEATHER_MAP_API_KEY = "09e6be8ca3991509ff0e08494e0238f7"
+	}
 }

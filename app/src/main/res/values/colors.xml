@@ -18,6 +18,7 @@
 <resources>
 	<color name="colorPrimary">#1a7eef</color>
 	<color name="colorPrimaryDark">#0067dc</color>
+	<color name="colorPrimaryDark1">#dcbf00</color>
 	<color name="colorAccent">#ffca00</color>
 
 	<color name="load_screen_gradient_dark">#0067dc</color>

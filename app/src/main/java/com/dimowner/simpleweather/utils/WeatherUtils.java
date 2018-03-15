@@ -17,22 +17,17 @@
  * the License.
  */
 
-package com.dimowner.simpleweather.dagger.application
+package com.dimowner.simpleweather.utils;
 
-import com.dimowner.simpleweather.presentation.ui.MainActivity
-import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.presentation.ui.WeatherDetailsFragment
-import dagger.Component
-import javax.inject.Singleton
+public class WeatherUtils {
 
-@Component(modules = arrayOf(AppModule::class))
-@Singleton
-interface AppComponent {
+	public static float kelvinToCelsius(float tempKelvin) {
+		return tempKelvin - 273.16f;
+	}
 
-	fun inject(app: SWApplication)
+	public static String formatTemp(float tempKelvin) {
+		return (int)(tempKelvin - 273.16f) + "°C";
+	}
 
-	fun inject(activity: MainActivity)
-
-	fun inject(activity: WeatherDetailsFragment)
 
 }

@@ -17,22 +17,13 @@
  * the License.
  */
 
-package com.dimowner.simpleweather.dagger.application
+package com.dimowner.simpleweather.data.remote.model
 
-import com.dimowner.simpleweather.presentation.ui.MainActivity
-import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.presentation.ui.WeatherDetailsFragment
-import dagger.Component
-import javax.inject.Singleton
+import com.google.gson.annotations.SerializedName
 
-@Component(modules = arrayOf(AppModule::class))
-@Singleton
-interface AppComponent {
-
-	fun inject(app: SWApplication)
-
-	fun inject(activity: MainActivity)
-
-	fun inject(activity: WeatherDetailsFragment)
-
-}
+data class Coord(
+		@SerializedName("lon")
+		val lon: Double,
+		@SerializedName("lat")
+		val lat: Double
+)

@@ -17,22 +17,18 @@
  * the License.
  */
 
-package com.dimowner.simpleweather.dagger.application
+package com.dimowner.simpleweather.data.repository
 
-import com.dimowner.simpleweather.presentation.ui.MainActivity
-import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.presentation.ui.WeatherDetailsFragment
-import dagger.Component
-import javax.inject.Singleton
+import com.dimowner.simpleweather.Constants
+import com.dimowner.simpleweather.data.remote.WeatherApi
+import com.dimowner.simpleweather.data.remote.model.WeatherResponse
+import io.reactivex.Single
 
-@Component(modules = arrayOf(AppModule::class))
-@Singleton
-interface AppComponent {
+class RepositoryImpl(
+		private val weatherApi: WeatherApi
+	) : Repository {
 
-	fun inject(app: SWApplication)
-
-	fun inject(activity: MainActivity)
-
-	fun inject(activity: WeatherDetailsFragment)
-
+	override fun getWeather(): Single<WeatherResponse> {
+		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY)
+	}
 }

@@ -39,14 +39,13 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 0
+def versionPatch = 1
 
 android {
     compileSdkVersion versions.targetSdkVersion
     buildToolsVersion versions.buildtools
     defaultConfig {
         applicationId "com.dimowner.simpleweather"
-        applicationId "com.dimowner.goodweather"
         minSdkVersion versions.minSdkVersion
         targetSdkVersion versions.targetSdkVersion
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
@@ -83,14 +82,14 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout-solver:$versions.constraintlayout"
 
     // Rx
-//    implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
-//    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxJava"
-//
-//    //RetroFit
-//    implementation "com.squareup.retrofit2:retrofit:$versions.retroFit"
-//    implementation "com.squareup.retrofit2:converter-gson:$versions.retroFit"
-//    implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retroFit"
-//    implementation "com.squareup.okhttp3:logging-interceptor:$versions.logInterceptor"
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxJava"
+
+    //RetroFit
+    implementation "com.squareup.retrofit2:retrofit:$versions.retroFit"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retroFit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retroFit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.logInterceptor"
 
     //Dagger2
     implementation "com.google.dagger:dagger:$versions.dagger2"

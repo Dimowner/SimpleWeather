@@ -17,22 +17,15 @@
  * the License.
  */
 
-package com.dimowner.simpleweather.dagger.application
+package com.dimowner.simpleweather.data.remote
 
-import com.dimowner.simpleweather.presentation.ui.MainActivity
-import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.presentation.ui.WeatherDetailsFragment
-import dagger.Component
-import javax.inject.Singleton
+import com.dimowner.simpleweather.data.remote.model.WeatherResponse
+import io.reactivex.Single
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-@Component(modules = arrayOf(AppModule::class))
-@Singleton
-interface AppComponent {
+interface WeatherApi {
 
-	fun inject(app: SWApplication)
-
-	fun inject(activity: MainActivity)
-
-	fun inject(activity: WeatherDetailsFragment)
-
+	@GET("weather")
+	fun getWeather(@Query("q") city: String, @Query("APPID") apiKey: String): Single<WeatherResponse>
 }
