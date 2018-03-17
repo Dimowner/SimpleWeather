@@ -21,6 +21,8 @@ package com.dimowner.simpleweather.dagger.application
 
 import com.dimowner.simpleweather.ui.main.MainActivity
 import com.dimowner.simpleweather.SWApplication
+import com.dimowner.simpleweather.data.periodic.JobSchedulerService
+import com.dimowner.simpleweather.data.periodic.UpdatesReceiver
 import com.dimowner.simpleweather.ui.main.WeatherDetailsFragment
 import com.dimowner.simpleweather.ui.settings.SettingsActivity
 import com.dimowner.simpleweather.ui.welcome.WelcomeActivity
@@ -40,5 +42,9 @@ interface AppComponent {
 	fun inject(activity: SettingsActivity)
 
 	fun inject(activity: WeatherDetailsFragment)
+
+	fun inject(receiver: UpdatesReceiver)
+
+	fun inject(service: JobSchedulerService)
 
 }

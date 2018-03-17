@@ -24,10 +24,16 @@ import com.dimowner.simpleweather.data.local.room.WeatherEntity
 import com.dimowner.simpleweather.data.repository.Repository
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 
 class LocalRepository(private val appDatabase: AppDatabase) : Repository {
+
+	override fun getWeatherToday(): Single<WeatherEntity> {
+		return appDatabase.weatherDao().getWeatherToday()
+	}
+
+	override fun getWeatherTomorrow(): Single<WeatherEntity> {
+		return appDatabase.weatherDao().getWeatherTomorrow()
+	}
 
 	override fun subscribeWeatherToday(): Flowable<WeatherEntity> {
 		return appDatabase.weatherDao().subscribeWeatherToday()
@@ -42,18 +48,14 @@ class LocalRepository(private val appDatabase: AppDatabase) : Repository {
 	}
 
 	override fun cacheWeather(entity: List<WeatherEntity>) {
-		Single.just(entity).doOnSuccess{
-			if (it.isNotEmpty()) {
-				appDatabase.weatherDao().delete(it[0].type)
-				appDatabase.weatherDao().insertAll(*it.toTypedArray())
-			}
-		}.observeOn(Schedulers.io()).subscribe({ Timber.v(it.toString())}, Timber::e)
+		if (entity.isNotEmpty()) {
+			appDatabase.weatherDao().delete(entity[0].type)
+			appDatabase.weatherDao().insertAll(*entity.toTypedArray())
+		}
 	}
 
 	override fun cacheWeather(entity: WeatherEntity) {
-		Single.just(entity).doOnSuccess{
-			appDatabase.weatherDao().delete(it.type)
-			appDatabase.weatherDao().insertWeather(it)
-		}.observeOn(Schedulers.io()).subscribe({Timber.v(it.toString())}, Timber::e)
+		appDatabase.weatherDao().delete(entity.type)
+		appDatabase.weatherDao().insertWeather(entity)
 	}
 }

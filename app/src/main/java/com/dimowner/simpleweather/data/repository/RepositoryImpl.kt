@@ -23,6 +23,7 @@ import com.dimowner.simpleweather.data.local.LocalRepository
 import com.dimowner.simpleweather.data.local.room.WeatherEntity
 import com.dimowner.simpleweather.data.remote.RemoteRepository
 import io.reactivex.Flowable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -31,8 +32,26 @@ class RepositoryImpl(
 		private val remoteRepository: RemoteRepository
 	) : Repository {
 
+	override fun getWeatherToday(): Single<WeatherEntity> {
+		return remoteRepository.getWeatherToday()
+				.subscribeOn(Schedulers.io())
+				.flatMap { data ->
+					localRepository.cacheWeather(data)
+					localRepository.getWeatherToday().subscribeOn(Schedulers.io())
+				}
+	}
+
+	override fun getWeatherTomorrow(): Single<WeatherEntity> {
+		return remoteRepository.getWeatherTomorrow()
+				.subscribeOn(Schedulers.io())
+				.flatMap { data ->
+					localRepository.cacheWeather(data)
+					localRepository.getWeatherTomorrow().subscribeOn(Schedulers.io())
+				}
+	}
+
 	override fun subscribeWeatherToday(): Flowable<WeatherEntity> {
-		remoteRepository.subscribeWeatherToday()
+		remoteRepository.getWeatherToday()
 				.subscribeOn(Schedulers.io())
 				.subscribe({response ->
 					localRepository.cacheWeather(response)

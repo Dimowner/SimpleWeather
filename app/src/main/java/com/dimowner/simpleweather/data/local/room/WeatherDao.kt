@@ -24,15 +24,22 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface WeatherDao {
+
+	@Query("SELECT * FROM weather WHERE type = 1")
+	fun getWeatherToday(): Single<WeatherEntity>
 
 	@Query("SELECT * FROM weather WHERE type = 1")
 	fun subscribeWeatherToday(): Flowable<WeatherEntity>
 
 	@Query("SELECT * FROM weather WHERE type = 2")
 	fun subscribeWeatherTomorrow(): Flowable<WeatherEntity>
+
+	@Query("SELECT * FROM weather WHERE type = 2")
+	fun getWeatherTomorrow(): Single<WeatherEntity>
 
 	@Query("SELECT * FROM weather WHERE type = 3")
 	fun subscribeWeatherTwoWeeks(): Flowable<List<WeatherEntity>>

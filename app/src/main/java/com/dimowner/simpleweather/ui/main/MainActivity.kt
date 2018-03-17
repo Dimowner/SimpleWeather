@@ -32,9 +32,11 @@ import android.view.MenuItem
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.data.Prefs
+import com.dimowner.simpleweather.data.periodic.UpdateManager
 import com.dimowner.simpleweather.ui.settings.SettingsActivity
 import com.dimowner.simpleweather.ui.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -81,6 +83,15 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 			pager.addOnPageChangeListener(this)
 
 			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+		}
+
+		if (UpdateManager.checkPeriodicUpdatesRunning(applicationContext)) {
+			Timber.v("alarm is running")
+			UpdateManager.stopPeriodicUpdates(applicationContext)
+			UpdateManager.startPeriodicUpdates(applicationContext)
+		} else {
+			Timber.v("alarm is NOT running")
+			UpdateManager.startPeriodicUpdates(applicationContext)
 		}
 	}
 

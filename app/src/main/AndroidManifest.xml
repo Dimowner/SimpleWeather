@@ -52,6 +52,20 @@
 				android:name="com.dimowner.simpleweather.ui.settings.SettingsActivity"
 				android:screenOrientation="portrait"/>
 
+		<receiver
+				android:name="com.dimowner.simpleweather.data.periodic.UpdatesReceiver"
+				android:exported="false">
+			<intent-filter>
+				<action android:name="com.dimowner.simpleweather.data.UPDATES_RECEIVER_ACTION"/>
+			</intent-filter>
+		</receiver>
+
+		<service
+				android:name=".data.periodic.JobSchedulerService"
+				android:label="Background weather updates"
+				android:permission="android.permission.BIND_JOB_SERVICE" >
+
+		</service>
 	</application>
 
 </manifest>

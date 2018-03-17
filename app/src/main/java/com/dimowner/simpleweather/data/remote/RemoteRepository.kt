@@ -25,23 +25,34 @@ import com.dimowner.simpleweather.data.local.room.AppDatabase
 import com.dimowner.simpleweather.data.local.room.WeatherEntity
 import com.dimowner.simpleweather.data.repository.Repository
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 class RemoteRepository (
 		private val weatherApi: WeatherApi
 	): Repository {
 
-	override fun subscribeWeatherToday(): Flowable<WeatherEntity> {
+	override fun getWeatherToday(): Single<WeatherEntity> {
 		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY)
 				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
 	}
 
-	override fun subscribeWeatherTomorrow(): Flowable<WeatherEntity> {
+	override fun getWeatherTomorrow(): Single<WeatherEntity> {
 		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY)
+				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+	}
+
+	override fun subscribeWeatherToday(): Flowable<WeatherEntity> {
+		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
+				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
+	}
+
+	override fun subscribeWeatherTomorrow(): Flowable<WeatherEntity> {
+		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
 				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TOMORROW, w) }
 	}
 
 	override fun subscribeWeatherTwoWeeks(): Flowable<List<WeatherEntity>> {
-		return weatherApi.getWeatherFewDays("Kyiv", 14, Constants.OPEN_WEATHER_MAP_API_KEY)
+		return weatherApi.getWeatherFewDays("Kyiv", 14, Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
 				.map{ w -> Mapper.convertWeatherListResponseToEntityList(AppDatabase.ITEM_TYPE_TOMORROW, w) }
 	}
 

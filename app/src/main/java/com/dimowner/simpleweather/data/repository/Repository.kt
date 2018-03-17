@@ -21,8 +21,13 @@ package com.dimowner.simpleweather.data.repository
 
 import com.dimowner.simpleweather.data.local.room.WeatherEntity
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 interface Repository {
+
+	fun getWeatherToday(): Single<WeatherEntity>
+
+	fun getWeatherTomorrow(): Single<WeatherEntity>
 
 	fun subscribeWeatherToday(): Flowable<WeatherEntity>
 

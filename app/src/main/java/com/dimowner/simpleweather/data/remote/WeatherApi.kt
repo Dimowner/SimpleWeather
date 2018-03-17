@@ -30,13 +30,11 @@ import retrofit2.http.Query
 interface WeatherApi {
 
 	@GET("weather")
-	fun getWeather(@Query("q") city: String, @Query("APPID") apiKey: String): Flowable<WeatherResponse>
+	fun getWeather(@Query("q") city: String, @Query("APPID") apiKey: String): Single<WeatherResponse>
 
 	@GET("forecast/daily")
 	fun getWeatherFewDays(
 			@Query("q") city: String,
 			@Query("cnt") cnt: Int,
-			@Query("APPID") apiKey: String): Flowable<WeatherListResponse>
-
-//	http://api.openweathermap.org/data/2.5/forecast/daily?q=London&cnt=14&appid=09e6be8ca3991509ff0e08494e0238f7
+			@Query("APPID") apiKey: String): Single<WeatherListResponse>
 }
