@@ -35,8 +35,8 @@ open class MetricsPresenter(open val prefs: Prefs, open val context: Context) : 
 		} else {
 			view.showTemperatureFormat(context.resources.getString(R.string.temp_fahrenheit))
 		}
-		if (prefs.getWindFormat() == Constants.WIND_FORMAT_KM_PER_HOUR) {
-			view.showWindFormat(context.resources.getString(R.string.wind_km_hour))
+		if (prefs.getWindFormat() == Constants.WIND_FORMAT_METER_PER_HOUR) {
+			view.showWindFormat(context.resources.getString(R.string.wind_meter_sec))
 		} else {
 			view.showWindFormat(context.resources.getString(R.string.wind_miles_hour))
 		}
@@ -65,8 +65,8 @@ open class MetricsPresenter(open val prefs: Prefs, open val context: Context) : 
 	}
 
 	override fun switchWind() {
-		if (prefs.switchWindFormat() == Constants.WIND_FORMAT_KM_PER_HOUR) {
-			view?.showWindFormat(context.resources.getString(R.string.wind_km_hour))
+		if (prefs.switchWindFormat() == Constants.WIND_FORMAT_METER_PER_HOUR) {
+			view?.showWindFormat(context.resources.getString(R.string.wind_meter_sec))
 		} else {
 			view?.showWindFormat(context.resources.getString(R.string.wind_miles_hour))
 		}

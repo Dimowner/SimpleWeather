@@ -35,8 +35,8 @@ ext.versions = [
 ]
 
 def versionMajor = 0
-def versionMinor = 1
-def versionPatch = 3
+def versionMinor = 2
+def versionPatch = 0
 
 android {
     compileSdkVersion versions.targetSdkVersion
@@ -94,9 +94,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$versions.dagger2"
     compile 'com.google.dagger:dagger:2.14.1'
 
-//    //Glide
-////    implementation "com.github.bumptech.glide:glide:$versions.glide"
-//
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$versions.glide"
+
 //    //Architecture components
 //    implementation "android.arch.lifecycle:runtime:$versions.archComp"
 //    implementation "android.arch.lifecycle:extensions:$versions.archComp"

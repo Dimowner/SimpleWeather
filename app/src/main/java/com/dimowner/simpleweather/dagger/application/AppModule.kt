@@ -24,7 +24,10 @@ import com.dimowner.simpleweather.data.Prefs
 import com.dimowner.simpleweather.data.remote.RestClient
 import com.dimowner.simpleweather.data.repository.Repository
 import com.dimowner.simpleweather.data.repository.RepositoryImpl
+import com.dimowner.simpleweather.domain.main.WeatherContract
+import com.dimowner.simpleweather.domain.main.WeatherPresenter
 import com.dimowner.simpleweather.domain.metrics.MetricsContract
+import com.dimowner.simpleweather.domain.metrics.MetricsPresenter
 import com.dimowner.simpleweather.domain.welcome.WelcomePresenter
 import dagger.Module
 import dagger.Provides
@@ -66,6 +69,12 @@ class AppModule(
 
 	@Provides
 	internal fun provideMetricsPresenter(prefs: Prefs, context: Context): MetricsContract.UserActionsListener {
-		return WelcomePresenter(prefs, context)
+		return MetricsPresenter(prefs, context)
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideWeatherPresenter(repository: Repository, prefs: Prefs, context: Context): WeatherContract.UserActionsListener {
+		return WeatherPresenter(repository, prefs, context)
 	}
 }

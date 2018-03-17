@@ -61,12 +61,12 @@ class Prefs constructor(context: Context){
 	}
 
 	fun switchWindFormat() : Int {
-		if (preferences.getInt(PREF_KEY_WIND_FORMAT, Constants.WIND_FORMAT_KM_PER_HOUR) == Constants.WIND_FORMAT_KM_PER_HOUR) {
+		if (preferences.getInt(PREF_KEY_WIND_FORMAT, Constants.WIND_FORMAT_METER_PER_HOUR) == Constants.WIND_FORMAT_METER_PER_HOUR) {
 			preferences.edit().putInt(PREF_KEY_WIND_FORMAT, Constants.WIND_FORMAT_MILES_PER_HOUR).apply()
 			return Constants.WIND_FORMAT_MILES_PER_HOUR
 		} else {
-			preferences.edit().putInt(PREF_KEY_WIND_FORMAT, Constants.WIND_FORMAT_KM_PER_HOUR).apply()
-			return Constants.WIND_FORMAT_KM_PER_HOUR
+			preferences.edit().putInt(PREF_KEY_WIND_FORMAT, Constants.WIND_FORMAT_METER_PER_HOUR).apply()
+			return Constants.WIND_FORMAT_METER_PER_HOUR
 		}
 	}
 
@@ -95,7 +95,7 @@ class Prefs constructor(context: Context){
 	}
 
 	fun getWindFormat(): Int {
-		return preferences.getInt(PREF_KEY_WIND_FORMAT, Constants.WIND_FORMAT_KM_PER_HOUR)
+		return preferences.getInt(PREF_KEY_WIND_FORMAT, Constants.WIND_FORMAT_METER_PER_HOUR)
 	}
 
 	fun getPressureFormat(): Int {
