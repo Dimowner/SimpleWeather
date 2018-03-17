@@ -32,7 +32,7 @@
 
 		<activity-alias
 				android:name="com.dimowner.goodweather.Launcher"
-				android:targetActivity="com.dimowner.simpleweather.ui.MainActivity">
+				android:targetActivity="com.dimowner.simpleweather.ui.main.MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
@@ -40,11 +40,17 @@
 		</activity-alias>
 
 		<activity
-				android:name="com.dimowner.simpleweather.ui.MainActivity"
+				android:name="com.dimowner.simpleweather.ui.main.MainActivity"
+				android:screenOrientation="portrait"
 				android:theme="@style/AppTheme.BrandedLaunch"/>
 
-		<activity android:name="com.dimowner.simpleweather.ui.welcome.WelcomeActivity"/>
-		<activity android:name="com.dimowner.simpleweather.ui.settings.SettingsActivity"/>
+		<activity
+				android:name="com.dimowner.simpleweather.ui.welcome.WelcomeActivity"
+				android:screenOrientation="portrait"/>
+
+		<activity
+				android:name="com.dimowner.simpleweather.ui.settings.SettingsActivity"
+				android:screenOrientation="portrait"/>
 
 	</application>
 

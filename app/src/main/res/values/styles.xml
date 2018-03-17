@@ -24,12 +24,12 @@
 
 		<item name="actionBarInsetStart">@dimen/spacing_huge</item>
 
-		<!--<item name="android:windowBackground">@color/colorPrimary</item>-->
+		<item name="android:windowBackground">@color/colorPrimary</item>
 	</style>
 
-	<style name="TransparentStatusBar" parent="AppTheme" >
-		<item name="android:windowTranslucentStatus">true</item>
-	</style>
+	<!--<style name="TransparentStatusBar" parent="AppTheme" >-->
+		<!--<item name="android:windowTranslucentStatus">true</item>-->
+	<!--</style>-->
 
 	<style name="ToolbarTransparent" parent="@style/ThemeOverlay.AppCompat.Dark">
 		<item name="android:textColor">@color/colorPrimary</item> 

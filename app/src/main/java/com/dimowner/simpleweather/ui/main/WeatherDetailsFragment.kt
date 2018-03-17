@@ -17,7 +17,7 @@
  * the License.
  */
 
-package com.dimowner.simpleweather.ui
+package com.dimowner.simpleweather.ui.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

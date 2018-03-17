@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.simpleweather.ui.metrics
+package com.dimowner.simpleweather.domain.metrics
 
 import android.content.Context
 import com.dimowner.simpleweather.Constants

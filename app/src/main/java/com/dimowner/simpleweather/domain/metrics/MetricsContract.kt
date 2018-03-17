@@ -17,15 +17,31 @@
  *  the License.
  */
 
-package com.dimowner.simpleweather.ui.welcome
+package com.dimowner.simpleweather.domain.metrics
 
-import android.content.Context
-import com.dimowner.simpleweather.data.Prefs
-import com.dimowner.simpleweather.ui.metrics.MetricsPresenter
+import com.dimowner.simpleweather.ui.Contract
 
-class WelcomePresenter(override val prefs: Prefs, override val context: Context) : MetricsPresenter(prefs, context) {
+interface MetricsContract {
 
-	fun firstRunExecuted() {
-		prefs.firstRunExecuted()
+	interface View : Contract.View {
+
+		fun showTemperatureFormat(format : String)
+
+		fun showWindFormat(format : String)
+
+		fun showPressureFormat(format : String)
+
+		fun showTimeFormat(format : String)
+	}
+
+	interface UserActionsListener : Contract.UserActionsListener<MetricsContract.View> {
+
+		fun switchTemperature()
+
+		fun switchWind()
+
+		fun switchPressure()
+
+		fun switchTimeFormat()
 	}
 }

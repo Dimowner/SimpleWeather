@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.ui.MainActivity
-import com.dimowner.simpleweather.ui.metrics.MetricsContract
+import com.dimowner.simpleweather.ui.main.MainActivity
+import com.dimowner.simpleweather.domain.metrics.MetricsContract
+import com.dimowner.simpleweather.domain.welcome.WelcomePresenter
 import kotlinx.android.synthetic.main.activity_welcome.*
 import javax.inject.Inject
 

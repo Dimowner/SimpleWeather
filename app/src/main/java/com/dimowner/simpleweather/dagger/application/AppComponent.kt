@@ -19,9 +19,9 @@
 
 package com.dimowner.simpleweather.dagger.application
 
-import com.dimowner.simpleweather.ui.MainActivity
+import com.dimowner.simpleweather.ui.main.MainActivity
 import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.ui.WeatherDetailsFragment
+import com.dimowner.simpleweather.ui.main.WeatherDetailsFragment
 import com.dimowner.simpleweather.ui.settings.SettingsActivity
 import com.dimowner.simpleweather.ui.welcome.WelcomeActivity
 import dagger.Component

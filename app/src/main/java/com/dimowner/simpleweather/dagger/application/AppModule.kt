@@ -24,8 +24,8 @@ import com.dimowner.simpleweather.data.Prefs
 import com.dimowner.simpleweather.data.remote.RestClient
 import com.dimowner.simpleweather.data.repository.Repository
 import com.dimowner.simpleweather.data.repository.RepositoryImpl
-import com.dimowner.simpleweather.ui.metrics.MetricsContract
-import com.dimowner.simpleweather.ui.welcome.WelcomePresenter
+import com.dimowner.simpleweather.domain.metrics.MetricsContract
+import com.dimowner.simpleweather.domain.welcome.WelcomePresenter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

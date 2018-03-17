@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.simpleweather.ui;
+package com.dimowner.simpleweather.ui.settings;
 
 import android.app.Activity;
 import android.app.AlertDialog;

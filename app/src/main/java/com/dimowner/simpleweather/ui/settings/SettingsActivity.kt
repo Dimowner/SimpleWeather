@@ -24,8 +24,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.ui.AboutDialog
-import com.dimowner.simpleweather.ui.metrics.MetricsContract
+import com.dimowner.simpleweather.domain.metrics.MetricsContract
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 
