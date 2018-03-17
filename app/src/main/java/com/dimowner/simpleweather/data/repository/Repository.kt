@@ -20,9 +20,7 @@
 package com.dimowner.simpleweather.data.repository
 
 import com.dimowner.simpleweather.data.local.room.WeatherEntity
-import com.dimowner.simpleweather.data.remote.model.WeatherResponse
 import io.reactivex.Flowable
-import io.reactivex.Single
 
 interface Repository {
 

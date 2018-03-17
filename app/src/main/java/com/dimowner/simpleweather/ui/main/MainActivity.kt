@@ -29,7 +29,6 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.data.Prefs
@@ -45,6 +44,8 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 	private val ITEM_TOMORROW = 1
 
 	@Inject lateinit var prefs: Prefs
+
+	private var prevMenuItem: MenuItem? = null
 
 	private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 		item.isChecked = true
@@ -87,17 +88,15 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 	override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
 	override fun onPageSelected(position: Int) {
-		val view: View
-		when (position) {
-			ITEM_TODAY -> {
-				view = bottomNavigation.findViewById(R.id.nav_today)
-				view.performClick()
-			}
-			ITEM_TOMORROW -> {
-				view = bottomNavigation.findViewById(R.id.nav_tomorrow)
-				view.performClick()
-			}
+		if (prevMenuItem != null) {
+			prevMenuItem?.isChecked = false
 		}
+		else {
+			bottomNavigation.menu.getItem(0).isChecked = false
+		}
+
+		bottomNavigation.menu.getItem(position).isChecked = true
+		prevMenuItem = bottomNavigation.menu.getItem(position)
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {

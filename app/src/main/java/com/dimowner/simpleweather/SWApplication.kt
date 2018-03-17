@@ -63,7 +63,7 @@ class SWApplication : Application() {
 
 	override fun onTrimMemory(level: Int) {
 		super.onTrimMemory(level)
-		Timber.d("onTrimMemory level = " + level)
+		Timber.d("onTrimMemory level = $level")
 	}
 
 	fun applicationComponent(): AppComponent {

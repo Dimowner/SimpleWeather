@@ -64,6 +64,7 @@ class WeatherPresenter(
 					}, {
 						view?.hideProgress()
 						Timber.e(it)
+						view?.showError(it.message!!)
 					})
 		} else if (type == WeatherDetailsFragment.TYPE_TOMORROW) {
 			disposable = repository.subscribeWeatherTomorrow()
@@ -74,6 +75,7 @@ class WeatherPresenter(
 					}, {
 						view?.hideProgress()
 						Timber.e(it)
+						view?.showError(it.message!!)
 					})
 		}
 	}
