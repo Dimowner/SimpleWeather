@@ -21,6 +21,19 @@ package com.dimowner.simpleweather
 
 class Constants {
 	companion object {
+
 		const val OPEN_WEATHER_MAP_API_KEY = "09e6be8ca3991509ff0e08494e0238f7"
+
+		const val TEMP_FORMAT_CELSIUS = 1
+		const val TEMP_FORMAT_FAHRENHEIT = 2
+
+		const val TIME_FORMAT_24H = 11
+		const val TIME_FORMAT_12H = 12
+
+		const val WIND_FORMAT_KM_PER_HOUR = 21
+		const val WIND_FORMAT_MILES_PER_HOUR = 22
+
+		const val PRESSURE_FORMAT_PHA = 31
+		const val PRESSURE_FORMAT_MM_HG = 32
 	}
 }

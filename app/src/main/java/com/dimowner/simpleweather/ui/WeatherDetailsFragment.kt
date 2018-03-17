@@ -17,13 +17,14 @@
  * the License.
  */
 
-package com.dimowner.simpleweather.presentation.ui
+package com.dimowner.simpleweather.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.dimowner.simpleweather.Constants
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.data.repository.Repository
@@ -58,10 +59,10 @@ class WeatherDetailsFragment : Fragment() {
 					Timber.v("WeatherResponse $it")
 
 					txtTemp.text = WeatherUtils.formatTemp(it.main.temp).toString()
-					txtDate.text = TimeUtils.formatTime(it.dt*1000)
+					txtDate.text = TimeUtils.formatTime(it.dt*1000, Constants.TIME_FORMAT_24H)
 
 					txtWind.text = getString(R.string.wind_val, it.wind.speed)
-					txtHumidity.text = getString(R.string.humidity_val, it.main.humidity)
+					txtTempFormat.text = getString(R.string.humidity_val, it.main.humidity)
 					txtPressure.text = getString(R.string.pressure_val, it.main.pressure)
 
 				},{ Timber.e(it)})

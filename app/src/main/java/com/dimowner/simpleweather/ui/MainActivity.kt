@@ -17,14 +17,18 @@
  * the License.
  */
 
-package com.dimowner.simpleweather.presentation.ui
+package com.dimowner.simpleweather.ui
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.view.Menu
+import android.view.MenuItem
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.data.Prefs
+import com.dimowner.simpleweather.ui.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -89,9 +93,28 @@ class MainActivity : AppCompatActivity() {
 		SWApplication.get(applicationContext).applicationComponent().inject(this)
 
 		Timber.v("isFirsRun = " + prefs.isFirstRun())
-//		prefs.firstRunExecuted()
-//		Timber.v("isFirsRun = " + prefs.isFirstRun())
 
-		startTodayWeatherFragment()
+		if (prefs.isFirstRun()) {
+			startActivity(Intent(applicationContext, WelcomeActivity::class.java))
+			finish()
+		} else {
+			startTodayWeatherFragment()
+		}
+	}
+
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		menuInflater.inflate(R.menu.menu_main, menu)
+		return super.onCreateOptionsMenu(menu)
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+		if (item != null) {
+			if (item.itemId == R.id.action_locate) {
+				//Locate
+			} else if (item.itemId == R.id.action_settings) {
+
+			}
+		}
+		return super.onOptionsItemSelected(item)
 	}
 }

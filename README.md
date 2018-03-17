@@ -1,4 +1,4 @@
-# Simple Weather application
+# Simple Weather
 <p>Very simple weather application for Android</p>
 
 ### Application design
@@ -7,7 +7,7 @@
 ### License
 
 ```
-Copyright 2017 Dmitriy Ponomarenko
+Copyright 2018 Dmitriy Ponomarenko
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements. See the NOTICE file distributed with this work for

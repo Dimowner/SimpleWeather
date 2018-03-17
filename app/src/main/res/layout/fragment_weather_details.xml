@@ -23,7 +23,7 @@
 		android:layout_height="match_parent"
 		android:background="@color/colorPrimary"
 		android:orientation="vertical"
-		tools:context="com.dimowner.simpleweather.presentation.ui.MainActivity">
+		tools:context="com.dimowner.simpleweather.ui.MainActivity">
 
 	<TextView
 			android:id="@+id/txtDate"
@@ -64,7 +64,7 @@
 			/>
 
 	<TextView
-			android:id="@+id/humidityLabel"
+			android:id="@+id/tempFormatLabel"
 			style="@style/Text.NormalLabel"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
 			android:layout_marginEnd="@dimen/spacing_double"
 			android:layout_marginBottom="@dimen/spacing_double"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="@+id/txtHumidity"
+			app:layout_constraintTop_toTopOf="@+id/txtTempFormat"
 			/>
 
 	<TextView
@@ -107,12 +107,12 @@
 			android:layout_marginEnd="@dimen/spacing_normal"
 			android:layout_marginBottom="@dimen/spacing_small"
 			app:layout_constraintStart_toEndOf="@id/barrier"
-			app:layout_constraintBottom_toTopOf="@id/txtHumidity"
+			app:layout_constraintBottom_toTopOf="@id/txtTempFormat"
 			tools:text="5 m/s"
 			/>
 
 	<TextView
-			android:id="@+id/txtHumidity"
+			android:id="@+id/txtTempFormat"
 			style="@style/Text.NormalValue"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

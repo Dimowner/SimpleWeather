@@ -24,6 +24,8 @@ import com.dimowner.simpleweather.data.Prefs
 import com.dimowner.simpleweather.data.remote.RestClient
 import com.dimowner.simpleweather.data.repository.Repository
 import com.dimowner.simpleweather.data.repository.RepositoryImpl
+import com.dimowner.simpleweather.ui.welcome.WelcomeContract
+import com.dimowner.simpleweather.ui.welcome.WelcomePresenter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -55,5 +57,10 @@ class AppModule(
 	@Singleton
 	internal fun provideRepository(restClient: RestClient): Repository {
 		return RepositoryImpl(restClient.weatherApi)
+	}
+
+	@Provides
+	internal fun provideWelcomePresenter(prefs: Prefs, context: Context): WelcomeContract.UserActionsListener {
+		return WelcomePresenter(prefs, context)
 	}
 }

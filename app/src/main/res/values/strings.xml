@@ -17,9 +17,13 @@
 <resources>
 	<string name="app_name">SimpleWeather</string>
 
+	<string name="metrics">Metrics</string>
+
 	<string name="wind">Wind:</string>
 	<string name="humidity">Humidity:</string>
+	<string name="temperature">Temperature:</string>
 	<string name="pressure">Pressure:</string>
+	<string name="time_format">Time format:</string>
 	<string name="wind_val">%d m/sec</string>
 	<string name="humidity_val">%d %%</string>
 	<string name="pressure_val">%d hPa</string>
@@ -27,5 +31,20 @@
 	<string name="nav_today">Today</string>
 	<string name="nav_tomorrow">Tomorrow</string>
 	<string name="nav_two_weeks">Two weeks</string>
+
+	<string name="btn_next">Next</string>
+	<string name="btn_apply">Apply</string>
+	<string name="btn_start">Start</string>
+	<string name="btn_locate">Locate</string>
+	<string name="btn_settings">Settings</string>
+
+	<string name="temp_celsius">°C</string>
+	<string name="temp_fahrenheit">°F</string>
+	<string name="wind_km_hour">km/h</string>
+	<string name="wind_miles_hour">miles/h</string>
+	<string name="pressure_pha">pHa</string>
+	<string name="pressure_mm_hg">mmHg</string>
+	<string name="time_format_24h">24H</string>
+	<string name="time_format_12h">12H</string>
 
 </resources>

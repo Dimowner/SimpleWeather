@@ -28,9 +28,6 @@ ext.versions = [
       //Architecture components
       archComp        : "1.0.0",
 
-      //ButterKnife
-      butterKnife     : "8.7.0",
-
       //Timber
       timber          : "4.6.0",
 
@@ -39,7 +36,7 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 1
+def versionPatch = 2
 
 android {
     compileSdkVersion versions.targetSdkVersion
