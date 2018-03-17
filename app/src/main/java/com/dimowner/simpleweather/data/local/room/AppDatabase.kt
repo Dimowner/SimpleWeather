@@ -17,32 +17,19 @@
  *  the License.
  */
 
-package com.dimowner.simpleweather.domain.main
+package com.dimowner.simpleweather.data.local.room
 
-import com.dimowner.simpleweather.ui.Contract
+import android.arch.persistence.room.Database
+import android.arch.persistence.room.RoomDatabase
 
-interface WeatherContract {
+@Database(entities = arrayOf(WeatherEntity::class), version = 1, exportSchema = false)
+abstract class AppDatabase : RoomDatabase() {
 
-	interface View : Contract.View {
+	abstract fun weatherDao(): WeatherDao
 
-		fun showDate(date: String)
-
-		fun showTemperature(temp: String)
-
-		fun showWind(wind: String)
-
-		fun showPressure(pressure: String)
-
-		fun showHumidity(humidity: String)
-
-		fun showWeatherIcon(url: String)
-	}
-
-	interface UserActionsListener : Contract.UserActionsListener<WeatherContract.View> {
-
-		fun locate()
-
-		fun updateWeather(type: Int)
-
+	companion object {
+		val ITEM_TYPE_TODAY = 1
+		val ITEM_TYPE_TOMORROW = 2
+		val ITEM_TYPE_TWO_WEEKS = 3
 	}
 }

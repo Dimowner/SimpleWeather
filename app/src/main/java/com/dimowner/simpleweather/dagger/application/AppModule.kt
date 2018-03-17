@@ -19,9 +19,16 @@
 
 package com.dimowner.simpleweather.dagger.application
 
+import android.arch.persistence.db.SupportSQLiteDatabase
+import android.arch.persistence.room.Room
+import android.arch.persistence.room.migration.Migration
 import android.content.Context
 import com.dimowner.simpleweather.data.Prefs
+import com.dimowner.simpleweather.data.local.LocalRepository
+import com.dimowner.simpleweather.data.local.room.AppDatabase
+import com.dimowner.simpleweather.data.remote.RemoteRepository
 import com.dimowner.simpleweather.data.remote.RestClient
+import com.dimowner.simpleweather.data.remote.WeatherApi
 import com.dimowner.simpleweather.data.repository.Repository
 import com.dimowner.simpleweather.data.repository.RepositoryImpl
 import com.dimowner.simpleweather.domain.main.WeatherContract
@@ -57,12 +64,6 @@ class AppModule(
 	}
 
 	@Provides
-	@Singleton
-	internal fun provideRepository(restClient: RestClient): Repository {
-		return RepositoryImpl(restClient.weatherApi)
-	}
-
-	@Provides
 	internal fun provideWelcomePresenter(prefs: Prefs, context: Context): WelcomePresenter {
 		return WelcomePresenter(prefs, context)
 	}
@@ -73,8 +74,47 @@ class AppModule(
 	}
 
 	@Provides
-	@Singleton
 	internal fun provideWeatherPresenter(repository: Repository, prefs: Prefs, context: Context): WeatherContract.UserActionsListener {
 		return WeatherPresenter(repository, prefs, context)
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideLocalRepository(appDatabase: AppDatabase): LocalRepository {
+		return LocalRepository(appDatabase)
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideRemoteRepository(restClient: RestClient): RemoteRepository {
+		return RemoteRepository(restClient.weatherApi)
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideRepository(localRepository: LocalRepository,
+								   remoteRepository: RemoteRepository): Repository {
+		return RepositoryImpl(localRepository, remoteRepository)
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideAppDatabase(context: Context): AppDatabase {
+		return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "weather_db")
+//				.fallbackToDestructiveMigration()
+				.addMigrations(MIGRATION_1_2)
+				.build()
+	}
+
+	/**
+	 * Migrate from:
+	 * version 1 - using the SQLiteDatabase API
+	 * to
+	 * version 2 - using Room
+	 */
+	private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+		override fun migrate(database: SupportSQLiteDatabase) {
+			//Migration code here
+		}
 	}
 }

@@ -17,32 +17,35 @@
  *  the License.
  */
 
-package com.dimowner.simpleweather.domain.main
+package com.dimowner.simpleweather.data.local.room
 
-import com.dimowner.simpleweather.ui.Contract
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
-interface WeatherContract {
+@Entity(tableName = "weather")
+data class WeatherEntity(
+	@SerializedName("type")
+	val type: Int,
+	@SerializedName("dt")
+	val dt: Long,
+	@SerializedName("temp")
+	val temp : Float,
+	@SerializedName("wind")
+	val wind: Float,
+	@SerializedName("humidity")
+	val humidity : Float,
+	@SerializedName("pressure")
+	val pressure : Float,
+	@SerializedName("lon")
+	val lon: Double,
+	@SerializedName("lat")
+	val lat: Double,
+	@SerializedName("icon")
+	val icon: String
+) {
 
-	interface View : Contract.View {
-
-		fun showDate(date: String)
-
-		fun showTemperature(temp: String)
-
-		fun showWind(wind: String)
-
-		fun showPressure(pressure: String)
-
-		fun showHumidity(humidity: String)
-
-		fun showWeatherIcon(url: String)
-	}
-
-	interface UserActionsListener : Contract.UserActionsListener<WeatherContract.View> {
-
-		fun locate()
-
-		fun updateWeather(type: Int)
-
-	}
+	@PrimaryKey(autoGenerate = true)
+	@SerializedName("id")
+	var id: Int = 0
 }

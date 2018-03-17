@@ -23,63 +23,40 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.data.Prefs
 import com.dimowner.simpleweather.ui.settings.SettingsActivity
 import com.dimowner.simpleweather.ui.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import timber.log.Timber
+import java.util.ArrayList
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
-	val NAV_ITEM_TODAY = R.id.nav_today
-	val NAV_ITEM_TOMORROW = R.id.nav_tomorrow
-	val NAV_ITEM_TWO_WEEKS = R.id.nav_two_weeks
-	val NAV_ITEM_INVALID = -1
+	private val ITEM_TODAY = 0
+	private val ITEM_TOMORROW = 1
 
 	@Inject lateinit var prefs: Prefs
 
 	private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-		when (item.getItemId()) {
-			NAV_ITEM_TODAY -> {
-				startTodayWeatherFragment()
+		item.isChecked = true
+		when (item.itemId) {
+			R.id.nav_today -> {
+				pager.setCurrentItem(ITEM_TODAY, true)
 			}
-			NAV_ITEM_TOMORROW -> {
-				startTomorrowWeatherFragment()
-			}
-			NAV_ITEM_TWO_WEEKS-> {
-				startTwoWeeksWeatherFragment()
+			R.id.nav_tomorrow -> {
+				pager.setCurrentItem(ITEM_TOMORROW, true)
 			}
 		}
 		false
-	}
-
-	private fun startTodayWeatherFragment() {
-		Timber.d("startTodayWeatherFragment")
-		supportFragmentManager
-				.beginTransaction()
-				.replace(R.id.fragment, WeatherDetailsFragment(), "today_weather")
-				.commit()
-	}
-
-	private fun startTomorrowWeatherFragment() {
-		Timber.d("startTomorrowWeatherFragment")
-		supportFragmentManager
-				.beginTransaction()
-				.replace(R.id.fragment, WeatherDetailsFragment(), "tomorrow_weather")
-				.commit()
-	}
-
-	private fun startTwoWeeksWeatherFragment() {
-		Timber.d("startTwoWeeksWeatherFragment")
-		supportFragmentManager
-				.beginTransaction()
-				.replace(R.id.fragment, WeatherDetailsFragment(), "two_weeks_weather")
-				.commit()
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +72,31 @@ class MainActivity : AppCompatActivity() {
 			startActivity(Intent(applicationContext, WelcomeActivity::class.java))
 			finish()
 		} else {
-			startTodayWeatherFragment()
+			val fragments = ArrayList<Fragment>()
+			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TODAY))
+			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TOMORROW))
+			val adapter = MyPagerAdapter(supportFragmentManager, fragments)
+			pager.adapter = adapter
+			pager.addOnPageChangeListener(this)
+
+			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+		}
+	}
+
+	override fun onPageScrollStateChanged(state: Int) {}
+	override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+	override fun onPageSelected(position: Int) {
+		val view: View
+		when (position) {
+			ITEM_TODAY -> {
+				view = bottomNavigation.findViewById(R.id.nav_today)
+				view.performClick()
+			}
+			ITEM_TOMORROW -> {
+				view = bottomNavigation.findViewById(R.id.nav_tomorrow)
+				view.performClick()
+			}
 		}
 	}
 
@@ -106,13 +107,27 @@ class MainActivity : AppCompatActivity() {
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 		if (item != null) {
-			if (item.itemId == R.id.action_locate) {
-				//Locate
-				startActivity(Intent(applicationContext, WelcomeActivity::class.java))
-			} else if (item.itemId == R.id.action_settings) {
+//			if (item.itemId == R.id.action_locate) {
+//				//Locate
+//				startActivity(Intent(applicationContext, WelcomeActivity::class.java))
+//			} else
+			if (item.itemId == R.id.action_settings) {
 				startActivity(Intent(applicationContext, SettingsActivity::class.java))
 			}
 		}
 		return super.onOptionsItemSelected(item)
+	}
+
+	private class MyPagerAdapter internal constructor(
+			fm: FragmentManager,
+			private val fragments: List<Fragment>) : FragmentPagerAdapter(fm) {
+
+		override fun getItem(position: Int): Fragment {
+			return fragments[position]
+		}
+
+		override fun getCount(): Int {
+			return fragments.size
+		}
 	}
 }

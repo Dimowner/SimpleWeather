@@ -22,19 +22,23 @@ package com.dimowner.simpleweather.domain.main
 import android.content.Context
 import com.dimowner.simpleweather.Constants
 import com.dimowner.simpleweather.data.Prefs
+import com.dimowner.simpleweather.data.local.room.WeatherEntity
 import com.dimowner.simpleweather.data.repository.Repository
+import com.dimowner.simpleweather.ui.main.WeatherDetailsFragment
 import com.dimowner.simpleweather.utils.TimeUtils
 import com.dimowner.simpleweather.utils.WeatherUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class WeatherPresenter(val repository: Repository, val prefs: Prefs, val context: Context) : WeatherContract.UserActionsListener {
+class WeatherPresenter(
+		private val repository: Repository,
+		private val prefs: Prefs,
+		private val context: Context) : WeatherContract.UserActionsListener {
 
-	var view: WeatherContract.View? = null
+	private var view: WeatherContract.View? = null
 
-	var disposable: Disposable? = null
+	private var disposable: Disposable? = null
 
 	override fun bindView(view: WeatherContract.View) {
 		this.view = view
@@ -49,25 +53,39 @@ class WeatherPresenter(val repository: Repository, val prefs: Prefs, val context
 		//TODO: waiting for implementation
 	}
 
-	override fun updateWeather() {
+	override fun updateWeather(type: Int) {
 		view?.showProgress()
-		disposable = repository.getWeather()
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe({
-					view?.showDate(TimeUtils.formatTime(it.dt * 1000, prefs.getTimeFormat()))
-					view?.showTemperature(WeatherUtils.formatTemp(it.main.temp, prefs.getTempFormat(), context).toString())
+		if (type == WeatherDetailsFragment.TYPE_TODAY) {
+			disposable = repository.subscribeWeatherToday()
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe({
+						showData(it)
+						view?.hideProgress()
+					}, {
+						view?.hideProgress()
+						Timber.e(it)
+					})
+		} else if (type == WeatherDetailsFragment.TYPE_TOMORROW) {
+			disposable = repository.subscribeWeatherTomorrow()
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe({
+						showData(it)
+						view?.hideProgress()
+					}, {
+						view?.hideProgress()
+						Timber.e(it)
+					})
+		}
+	}
 
-					view?.showWind(WeatherUtils.formatWind(it.wind.speed, prefs.getWindFormat(), context))
-					view?.showHumidity(WeatherUtils.formatHumidity(it.main.humidity, context))
-					view?.showPressure(WeatherUtils.formatPressure(it.main.pressure, prefs.getPressureFormat(), context))
+	private fun showData(entity: WeatherEntity) {
+		view?.showDate(TimeUtils.formatTime(entity.dt * 1000, prefs.getTimeFormat()))
+		view?.showTemperature(WeatherUtils.formatTemp(entity.temp, prefs.getTempFormat(), context).toString())
 
-					view?.showWeatherIcon(Constants.WEATHER_ICON_URL + it.weather[0].icon + Constants.PNG)
+		view?.showWind(WeatherUtils.formatWind(entity.wind, prefs.getWindFormat(), context))
+		view?.showHumidity(WeatherUtils.formatHumidity(entity.humidity, context))
+		view?.showPressure(WeatherUtils.formatPressure(entity.pressure, prefs.getPressureFormat(), context))
 
-					view?.hideProgress()
-				}, {
-					view?.hideProgress()
-					Timber.e(it)
-				})
+		view?.showWeatherIcon(Constants.WEATHER_ICON_URL + entity.icon + Constants.PNG)
 	}
 }

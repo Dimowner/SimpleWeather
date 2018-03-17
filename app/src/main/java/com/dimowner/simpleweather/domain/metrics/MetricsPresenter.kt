@@ -26,7 +26,7 @@ import com.dimowner.simpleweather.data.Prefs
 
 open class MetricsPresenter(open val prefs: Prefs, open val context: Context) : MetricsContract.UserActionsListener {
 
-	var view: MetricsContract.View? = null
+	private var view: MetricsContract.View? = null
 
 	override fun bindView(view: MetricsContract.View) {
 		this.view = view

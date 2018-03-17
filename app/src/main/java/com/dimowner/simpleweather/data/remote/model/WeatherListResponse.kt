@@ -17,32 +17,20 @@
  *  the License.
  */
 
-package com.dimowner.simpleweather.domain.main
+package com.dimowner.simpleweather.data.remote.model
 
-import com.dimowner.simpleweather.ui.Contract
 
-interface WeatherContract {
+import com.google.gson.annotations.SerializedName
 
-	interface View : Contract.View {
-
-		fun showDate(date: String)
-
-		fun showTemperature(temp: String)
-
-		fun showWind(wind: String)
-
-		fun showPressure(pressure: String)
-
-		fun showHumidity(humidity: String)
-
-		fun showWeatherIcon(url: String)
-	}
-
-	interface UserActionsListener : Contract.UserActionsListener<WeatherContract.View> {
-
-		fun locate()
-
-		fun updateWeather(type: Int)
-
-	}
-}
+data class WeatherListResponse(
+		@SerializedName("city")
+		val city : City,
+		@SerializedName("cod")
+		val cod: String,
+		@SerializedName("message")
+		val message: Float,
+		@SerializedName("cnt")
+		val cnt: Int,
+		@SerializedName("list")
+		val list: List<WeatherListItem>
+)

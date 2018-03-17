@@ -20,8 +20,8 @@
 	<shape android:shape="rectangle" >
 		<gradient android:type="radial"
 					 android:gradientRadius="900"
-					 android:startColor="@color/load_screen_gradient_light"
-					 android:endColor="@color/load_screen_gradient_dark" />
+					 android:startColor="@color/colorPrimary"
+					 android:endColor="@color/colorPrimary" />
 	</shape>
 </item>
 <item>

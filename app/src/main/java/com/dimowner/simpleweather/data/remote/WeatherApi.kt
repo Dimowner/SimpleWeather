@@ -19,7 +19,10 @@
 
 package com.dimowner.simpleweather.data.remote
 
+import com.dimowner.simpleweather.data.remote.model.WeatherListResponse
+import com.dimowner.simpleweather.data.remote.model.WeatherListResponse2
 import com.dimowner.simpleweather.data.remote.model.WeatherResponse
+import io.reactivex.Flowable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -27,5 +30,13 @@ import retrofit2.http.Query
 interface WeatherApi {
 
 	@GET("weather")
-	fun getWeather(@Query("q") city: String, @Query("APPID") apiKey: String): Single<WeatherResponse>
+	fun getWeather(@Query("q") city: String, @Query("APPID") apiKey: String): Flowable<WeatherResponse>
+
+	@GET("forecast/daily")
+	fun getWeatherFewDays(
+			@Query("q") city: String,
+			@Query("cnt") cnt: Int,
+			@Query("APPID") apiKey: String): Flowable<WeatherListResponse>
+
+//	http://api.openweathermap.org/data/2.5/forecast/daily?q=London&cnt=14&appid=09e6be8ca3991509ff0e08494e0238f7
 }

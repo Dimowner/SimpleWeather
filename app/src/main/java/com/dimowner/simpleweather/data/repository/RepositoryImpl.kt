@@ -19,16 +19,52 @@
 
 package com.dimowner.simpleweather.data.repository
 
-import com.dimowner.simpleweather.Constants
-import com.dimowner.simpleweather.data.remote.WeatherApi
-import com.dimowner.simpleweather.data.remote.model.WeatherResponse
-import io.reactivex.Single
+import com.dimowner.simpleweather.data.local.LocalRepository
+import com.dimowner.simpleweather.data.local.room.WeatherEntity
+import com.dimowner.simpleweather.data.remote.RemoteRepository
+import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 class RepositoryImpl(
-		private val weatherApi: WeatherApi
+		private val localRepository: LocalRepository,
+		private val remoteRepository: RemoteRepository
 	) : Repository {
 
-	override fun getWeather(): Single<WeatherResponse> {
-		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY)
+	override fun subscribeWeatherToday(): Flowable<WeatherEntity> {
+		remoteRepository.subscribeWeatherToday()
+				.subscribeOn(Schedulers.io())
+				.subscribe({response ->
+					localRepository.cacheWeather(response)
+				}, Timber::e)
+		return localRepository.subscribeWeatherToday()
+				.subscribeOn(Schedulers.io())
+	}
+
+	override fun subscribeWeatherTomorrow(): Flowable<WeatherEntity> {
+		remoteRepository.subscribeWeatherTomorrow()
+				.subscribeOn(Schedulers.io())
+				.subscribe({response ->
+					localRepository.cacheWeather(response)
+				}, Timber::e)
+		return localRepository.subscribeWeatherTomorrow()
+				.subscribeOn(Schedulers.io())
+	}
+
+	override fun subscribeWeatherTwoWeeks(): Flowable<List<WeatherEntity>> {
+		remoteRepository.subscribeWeatherTwoWeeks()
+				.subscribeOn(Schedulers.io())
+				.subscribe({response ->
+					localRepository.cacheWeather(response)
+				}, Timber::e)
+		return localRepository.subscribeWeatherTwoWeeks()
+				.subscribeOn(Schedulers.io())
+	}
+
+	override fun cacheWeather(entity: List<WeatherEntity>) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+	override fun cacheWeather(entity: WeatherEntity) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 }

@@ -71,7 +71,7 @@ class Prefs constructor(context: Context){
 	}
 
 	fun switchPressureFormat() : Int {
-		if (preferences.getInt(PREF_KEY_PRESSURE_FORMAT, Constants.PRESSURE_FORMAT_MM_HG) == Constants.PRESSURE_FORMAT_MM_HG) {
+		if (preferences.getInt(PREF_KEY_PRESSURE_FORMAT, Constants.PRESSURE_FORMAT_PHA) == Constants.PRESSURE_FORMAT_MM_HG) {
 			preferences.edit().putInt(PREF_KEY_PRESSURE_FORMAT, Constants.PRESSURE_FORMAT_PHA).apply()
 			return Constants.PRESSURE_FORMAT_PHA
 		} else {
@@ -99,7 +99,7 @@ class Prefs constructor(context: Context){
 	}
 
 	fun getPressureFormat(): Int {
-		return preferences.getInt(PREF_KEY_PRESSURE_FORMAT, Constants.PRESSURE_FORMAT_MM_HG)
+		return preferences.getInt(PREF_KEY_PRESSURE_FORMAT, Constants.PRESSURE_FORMAT_PHA)
 	}
 
 	fun getTimeFormat(): Int {

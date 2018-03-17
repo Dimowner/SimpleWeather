@@ -35,6 +35,20 @@ import javax.inject.Inject
 
 class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 
+	companion object {
+		val ARG_KEY_TYPE = "key_type"
+		val TYPE_TODAY: Int = 1
+		val TYPE_TOMORROW: Int = 2
+
+		fun newInstance(type: Int): WeatherDetailsFragment {
+			val args = Bundle()
+			args.putInt(ARG_KEY_TYPE, type)
+			val fragment = WeatherDetailsFragment()
+			fragment.arguments = args
+			return fragment
+		}
+	}
+
 	@Inject lateinit var presenter : WeatherContract.UserActionsListener
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,13 +59,13 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		weatherIcon.setOnClickListener{ presenter.updateWeather() }
+		weatherIcon.setOnClickListener{ presenter.updateWeather(arguments?.getInt(ARG_KEY_TYPE) ?: TYPE_TODAY) }
 		presenter.bindView(this)
 	}
 
 	override fun onResume() {
 		super.onResume()
-		presenter.updateWeather()
+		presenter.updateWeather(arguments?.getInt(ARG_KEY_TYPE) ?: TYPE_TODAY)
 	}
 
 	override fun onDestroyView() {

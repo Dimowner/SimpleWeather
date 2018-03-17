@@ -25,6 +25,9 @@ class Constants {
 		const val OPEN_WEATHER_MAP_API_KEY = "09e6be8ca3991509ff0e08494e0238f7"
 
 		const val WEATHER_ICON_URL = "http://openweathermap.org/img/w/"
+
+//		http://api.openweathermap.org/data/2.5/forecast/daily?q=London&cnt=14&appid=09e6be8ca3991509ff0e08494e0238f7
+
 		const val PNG = ".png"
 
 		const val TEMP_FORMAT_CELSIUS = 1
