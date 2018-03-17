@@ -6,12 +6,13 @@ import android.support.v7.app.AppCompatActivity
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.ui.MainActivity
+import com.dimowner.simpleweather.ui.metrics.MetricsContract
 import kotlinx.android.synthetic.main.activity_welcome.*
 import javax.inject.Inject
 
-class WelcomeActivity : AppCompatActivity(), WelcomeContract.View {
+class WelcomeActivity : AppCompatActivity(), MetricsContract.View {
 
-	@Inject lateinit var presenter : WelcomeContract.UserActionsListener
+	@Inject lateinit var presenter : WelcomePresenter
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

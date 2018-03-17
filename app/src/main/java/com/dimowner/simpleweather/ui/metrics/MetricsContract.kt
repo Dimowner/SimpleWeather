@@ -17,11 +17,11 @@
  *  the License.
  */
 
-package com.dimowner.simpleweather.ui.welcome
+package com.dimowner.simpleweather.ui.metrics
 
 import com.dimowner.simpleweather.ui.Contract
 
-interface WelcomeContract {
+interface MetricsContract {
 
 	interface View : Contract.View {
 
@@ -31,12 +31,10 @@ interface WelcomeContract {
 
 		fun showPressureFormat(format : String)
 
-//		fun showHumidityFormat(format : String)
-
 		fun showTimeFormat(format : String)
 	}
 
-	interface UserActionsListener : Contract.UserActionsListener<WelcomeContract.View> {
+	interface UserActionsListener : Contract.UserActionsListener<MetricsContract.View> {
 
 		fun switchTemperature()
 
@@ -45,7 +43,5 @@ interface WelcomeContract {
 		fun switchPressure()
 
 		fun switchTimeFormat()
-
-		fun firstRunExecuted()
 	}
 }

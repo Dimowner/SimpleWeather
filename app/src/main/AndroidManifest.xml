@@ -43,9 +43,8 @@
 				android:name="com.dimowner.simpleweather.ui.MainActivity"
 				android:theme="@style/AppTheme.BrandedLaunch"/>
 
-		<activity
-				android:name="com.dimowner.simpleweather.ui.welcome.WelcomeActivity"
-				android:theme="@style/AppTheme.BrandedLaunch"/>
+		<activity android:name="com.dimowner.simpleweather.ui.welcome.WelcomeActivity"/>
+		<activity android:name="com.dimowner.simpleweather.ui.settings.SettingsActivity"/>
 
 	</application>
 

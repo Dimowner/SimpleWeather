@@ -22,6 +22,7 @@ package com.dimowner.simpleweather.dagger.application
 import com.dimowner.simpleweather.ui.MainActivity
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.ui.WeatherDetailsFragment
+import com.dimowner.simpleweather.ui.settings.SettingsActivity
 import com.dimowner.simpleweather.ui.welcome.WelcomeActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -35,6 +36,8 @@ interface AppComponent {
 	fun inject(activity: WelcomeActivity)
 
 	fun inject(activity: MainActivity)
+
+	fun inject(activity: SettingsActivity)
 
 	fun inject(activity: WeatherDetailsFragment)
 

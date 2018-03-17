@@ -24,7 +24,7 @@ import com.dimowner.simpleweather.data.Prefs
 import com.dimowner.simpleweather.data.remote.RestClient
 import com.dimowner.simpleweather.data.repository.Repository
 import com.dimowner.simpleweather.data.repository.RepositoryImpl
-import com.dimowner.simpleweather.ui.welcome.WelcomeContract
+import com.dimowner.simpleweather.ui.metrics.MetricsContract
 import com.dimowner.simpleweather.ui.welcome.WelcomePresenter
 import dagger.Module
 import dagger.Provides
@@ -60,7 +60,12 @@ class AppModule(
 	}
 
 	@Provides
-	internal fun provideWelcomePresenter(prefs: Prefs, context: Context): WelcomeContract.UserActionsListener {
+	internal fun provideWelcomePresenter(prefs: Prefs, context: Context): WelcomePresenter {
+		return WelcomePresenter(prefs, context)
+	}
+
+	@Provides
+	internal fun provideMetricsPresenter(prefs: Prefs, context: Context): MetricsContract.UserActionsListener {
 		return WelcomePresenter(prefs, context)
 	}
 }

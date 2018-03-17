@@ -22,6 +22,7 @@ package com.dimowner.simpleweather.ui
 interface Contract {
 
 	interface View {
+
 		fun showProgress()
 
 		fun hideProgress()
@@ -31,7 +32,7 @@ interface Contract {
 		fun showError(resId: Int)
 	}
 
-	interface UserActionsListener<T : View> {
+	interface UserActionsListener<in T : View> {
 
 		fun bindView(view: T)
 

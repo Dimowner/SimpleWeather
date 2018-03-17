@@ -28,6 +28,7 @@ import android.view.MenuItem
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.data.Prefs
+import com.dimowner.simpleweather.ui.settings.SettingsActivity
 import com.dimowner.simpleweather.ui.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -88,11 +89,7 @@ class MainActivity : AppCompatActivity() {
 
 		setSupportActionBar(toolbar)
 
-		Timber.v("onCreate")
-
 		SWApplication.get(applicationContext).applicationComponent().inject(this)
-
-		Timber.v("isFirsRun = " + prefs.isFirstRun())
 
 		if (prefs.isFirstRun()) {
 			startActivity(Intent(applicationContext, WelcomeActivity::class.java))
@@ -111,8 +108,9 @@ class MainActivity : AppCompatActivity() {
 		if (item != null) {
 			if (item.itemId == R.id.action_locate) {
 				//Locate
+				startActivity(Intent(applicationContext, WelcomeActivity::class.java))
 			} else if (item.itemId == R.id.action_settings) {
-
+				startActivity(Intent(applicationContext, SettingsActivity::class.java))
 			}
 		}
 		return super.onOptionsItemSelected(item)
