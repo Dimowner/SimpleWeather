@@ -28,7 +28,6 @@ import com.dimowner.simpleweather.data.local.LocalRepository
 import com.dimowner.simpleweather.data.local.room.AppDatabase
 import com.dimowner.simpleweather.data.remote.RemoteRepository
 import com.dimowner.simpleweather.data.remote.RestClient
-import com.dimowner.simpleweather.data.remote.WeatherApi
 import com.dimowner.simpleweather.data.repository.Repository
 import com.dimowner.simpleweather.data.repository.RepositoryImpl
 import com.dimowner.simpleweather.domain.main.WeatherContract

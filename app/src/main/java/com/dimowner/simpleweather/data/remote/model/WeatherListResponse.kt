@@ -32,5 +32,5 @@ data class WeatherListResponse(
 		@SerializedName("cnt")
 		val cnt: Int,
 		@SerializedName("list")
-		val list: List<WeatherListItem>
+		var list: Array<WeatherListItem>
 )

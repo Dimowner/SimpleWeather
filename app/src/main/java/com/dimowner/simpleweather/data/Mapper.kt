@@ -21,7 +21,6 @@ package com.dimowner.simpleweather.data
 
 import com.dimowner.simpleweather.data.local.room.WeatherEntity
 import com.dimowner.simpleweather.data.remote.model.WeatherListResponse
-import com.dimowner.simpleweather.data.remote.model.WeatherListResponse2
 import com.dimowner.simpleweather.data.remote.model.WeatherResponse
 
 class Mapper {
@@ -34,6 +33,7 @@ class Mapper {
 					response.wind.speed,
 					response.main.humidity,
 					response.main.pressure,
+					response.weather[0].description,
 					response.coord.lon,
 					response.coord.lat,
 					response.weather[0].icon
@@ -49,6 +49,7 @@ class Mapper {
 					response.wind.speed,
 					response.main.humidity,
 					response.main.pressure,
+					response.weather[0].description,
 					response.coord.lon,
 					response.coord.lat,
 					response.weather[0].icon
@@ -66,9 +67,10 @@ class Mapper {
 						item.speed,
 						item.humidity,
 						item.pressure,
+						item.weather[0].description,
 						response.city.coord.lon,
 						response.city.coord.lat,
-						item.weather.icon
+						item.weather[0].icon
 				))
 			}
 			return list

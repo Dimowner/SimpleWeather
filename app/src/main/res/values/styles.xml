@@ -64,6 +64,12 @@
 		<item name="android:fontFamily">sans-serif</item>
 	</style>
 
+	<style name="Text.Subheader">
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+		<item name="android:textColor">@color/text_secondary_light</item>
+	</style>
+
 	<style name="Text.TemperatureText" parent="Text">
 		<item name="android:textSize">@dimen/temperature_text_size</item>
 	</style>

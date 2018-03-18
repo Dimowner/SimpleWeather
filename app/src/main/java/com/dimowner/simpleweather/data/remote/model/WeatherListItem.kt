@@ -31,7 +31,7 @@ data class WeatherListItem(
 		@SerializedName("humidity")
 		val humidity: Float,
 		@SerializedName("weather")
-		val weather: Weather,
+		val weather: Array<Weather>,
 		@SerializedName("speed")
 		val speed: Float,
 		@SerializedName("deg")

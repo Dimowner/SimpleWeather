@@ -25,7 +25,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
 	private val ITEM_TODAY = 0
 	private val ITEM_TOMORROW = 1
+	private val ITEM_TWO_WEEKS = 2
 
 	@Inject lateinit var prefs: Prefs
 
@@ -57,6 +58,9 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 			}
 			R.id.nav_tomorrow -> {
 				pager.setCurrentItem(ITEM_TOMORROW, true)
+			}
+			R.id.nav_two_weeks -> {
+				pager.setCurrentItem(ITEM_TWO_WEEKS, true)
 			}
 		}
 		false
@@ -78,6 +82,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 			val fragments = ArrayList<Fragment>()
 			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TODAY))
 			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TOMORROW))
+			fragments.add(WeatherTwoWeeksFragment())
 			val adapter = MyPagerAdapter(supportFragmentManager, fragments)
 			pager.adapter = adapter
 			pager.addOnPageChangeListener(this)
@@ -130,7 +135,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
 	private class MyPagerAdapter internal constructor(
 			fm: FragmentManager,
-			private val fragments: List<Fragment>) : FragmentPagerAdapter(fm) {
+			private val fragments: List<Fragment>) : FragmentStatePagerAdapter(fm) {
 
 		override fun getItem(position: Int): Fragment {
 			return fragments[position]

@@ -28,9 +28,9 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
+import com.dimowner.simpleweather.data.local.room.WeatherEntity
 import com.dimowner.simpleweather.domain.main.WeatherContract
 import kotlinx.android.synthetic.main.fragment_weather_details.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class WeatherDetailsFragment : Fragment(), WeatherContract.View {
@@ -94,10 +94,13 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 	}
 
 	override fun showWeatherIcon(url: String) {
-		Timber.v("showWeatherIcon %s", url)
 		Glide.with(context)
 				.load(url)
 				.into(weatherIcon)
+	}
+
+	override fun showTwoWeeksWeather(list: List<WeatherEntity>) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
 	override fun showProgress() {

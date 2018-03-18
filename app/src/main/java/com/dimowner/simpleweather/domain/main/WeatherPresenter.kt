@@ -28,7 +28,7 @@ import com.dimowner.simpleweather.ui.main.WeatherDetailsFragment
 import com.dimowner.simpleweather.utils.TimeUtils
 import com.dimowner.simpleweather.utils.WeatherUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 
 class WeatherPresenter(
@@ -38,7 +38,7 @@ class WeatherPresenter(
 
 	private var view: WeatherContract.View? = null
 
-	private var disposable: Disposable? = null
+	private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
 	override fun bindView(view: WeatherContract.View) {
 		this.view = view
@@ -53,10 +53,24 @@ class WeatherPresenter(
 		//TODO: waiting for implementation
 	}
 
+	override fun updateWeatherTwoWeeks() {
+		view?.showProgress()
+		disposable.add(repository.subscribeWeatherTwoWeeks()
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe({d ->
+					view?.showTwoWeeksWeather(d)
+					view?.hideProgress()
+				}, {
+					view?.hideProgress()
+					Timber.e(it)
+					view?.showError(it.message!!)
+				}))
+	}
+
 	override fun updateWeather(type: Int) {
 		view?.showProgress()
 		if (type == WeatherDetailsFragment.TYPE_TODAY) {
-			disposable = repository.subscribeWeatherToday()
+			disposable.add(repository.subscribeWeatherToday()
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe({
 						showData(it)
@@ -65,9 +79,9 @@ class WeatherPresenter(
 						view?.hideProgress()
 						Timber.e(it)
 						view?.showError(it.message!!)
-					})
+					}))
 		} else if (type == WeatherDetailsFragment.TYPE_TOMORROW) {
-			disposable = repository.subscribeWeatherTomorrow()
+			disposable.add(repository.subscribeWeatherTomorrow()
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe({
 						showData(it)
@@ -76,7 +90,7 @@ class WeatherPresenter(
 						view?.hideProgress()
 						Timber.e(it)
 						view?.showError(it.message!!)
-					})
+					}))
 		}
 	}
 

@@ -19,6 +19,7 @@
 
 package com.dimowner.simpleweather.domain.main
 
+import com.dimowner.simpleweather.data.local.room.WeatherEntity
 import com.dimowner.simpleweather.ui.Contract
 
 interface WeatherContract {
@@ -36,6 +37,8 @@ interface WeatherContract {
 		fun showHumidity(humidity: String)
 
 		fun showWeatherIcon(url: String)
+
+		fun showTwoWeeksWeather(list: List<WeatherEntity>)
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<WeatherContract.View> {
@@ -44,5 +47,6 @@ interface WeatherContract {
 
 		fun updateWeather(type: Int)
 
+		fun updateWeatherTwoWeeks()
 	}
 }

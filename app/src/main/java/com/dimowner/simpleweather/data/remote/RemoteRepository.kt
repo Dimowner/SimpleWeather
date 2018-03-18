@@ -53,7 +53,7 @@ class RemoteRepository (
 
 	override fun subscribeWeatherTwoWeeks(): Flowable<List<WeatherEntity>> {
 		return weatherApi.getWeatherFewDays("Kyiv", 14, Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
-				.map{ w -> Mapper.convertWeatherListResponseToEntityList(AppDatabase.ITEM_TYPE_TOMORROW, w) }
+				.map{ w -> Mapper.convertWeatherListResponseToEntityList(AppDatabase.ITEM_TYPE_TWO_WEEKS, w) }
 	}
 
 	override fun cacheWeather(entity: List<WeatherEntity>) {

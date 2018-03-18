@@ -20,9 +20,7 @@
 package com.dimowner.simpleweather.data.remote
 
 import com.dimowner.simpleweather.data.remote.model.WeatherListResponse
-import com.dimowner.simpleweather.data.remote.model.WeatherListResponse2
 import com.dimowner.simpleweather.data.remote.model.WeatherResponse
-import io.reactivex.Flowable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

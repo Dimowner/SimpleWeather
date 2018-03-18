@@ -37,6 +37,8 @@ data class WeatherEntity(
 	val humidity : Float,
 	@SerializedName("pressure")
 	val pressure : Float,
+	@SerializedName("description")
+	val description : String,
 	@SerializedName("lon")
 	val lon: Double,
 	@SerializedName("lat")
