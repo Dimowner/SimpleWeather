@@ -27,9 +27,9 @@
 		<item name="android:windowBackground">@color/colorPrimary</item>
 	</style>
 
-	<!--<style name="TransparentStatusBar" parent="AppTheme" >-->
+	<style name="AppTheme.TransparentStatusBar" parent="AppTheme" >
 		<!--<item name="android:windowTranslucentStatus">true</item>-->
-	<!--</style>-->
+	</style>
 
 	<style name="ToolbarTransparent" parent="@style/ThemeOverlay.AppCompat.Dark">
 		<item name="android:textColor">@color/colorPrimary</item> 
@@ -62,6 +62,10 @@
 	<style name="Text.NormalValue" parent="Text">
 		<item name="android:textSize">@dimen/text_xmedium</item>
 		<item name="android:fontFamily">sans-serif</item>
+	</style>
+
+	<style name="Text.Input" parent="Text">
+		<item name="android:textColorHint">@color/text_secondary_light</item>
 	</style>
 
 	<style name="Text.Subheader">

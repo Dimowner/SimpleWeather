@@ -20,6 +20,8 @@
 
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
 	<application
 			android:name=".SWApplication"
@@ -29,6 +31,10 @@
 			android:roundIcon="@mipmap/simple_weather_logo"
 			android:supportsRtl="true"
 			android:theme="@style/AppTheme">
+
+		<meta-data
+				android:name="com.google.android.geo.API_KEY"
+				android:value="@string/google_maps_key"/>
 
 		<activity-alias
 				android:name="com.dimowner.goodweather.Launcher"
@@ -47,6 +53,12 @@
 		<activity
 				android:name="com.dimowner.simpleweather.ui.welcome.WelcomeActivity"
 				android:screenOrientation="portrait"/>
+
+		<activity
+				android:name="com.dimowner.simpleweather.ui.location.LocationActivity"
+				android:screenOrientation="portrait"
+				android:theme="@style/AppTheme.TransparentStatusBar"
+				/>
 
 		<activity
 				android:name="com.dimowner.simpleweather.ui.settings.SettingsActivity"

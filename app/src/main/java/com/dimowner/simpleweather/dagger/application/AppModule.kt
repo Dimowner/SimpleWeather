@@ -26,10 +26,12 @@ import android.content.Context
 import com.dimowner.simpleweather.data.Prefs
 import com.dimowner.simpleweather.data.local.LocalRepository
 import com.dimowner.simpleweather.data.local.room.AppDatabase
+import com.dimowner.simpleweather.data.remote.GeocodeRestClient
 import com.dimowner.simpleweather.data.remote.RemoteRepository
-import com.dimowner.simpleweather.data.remote.RestClient
+import com.dimowner.simpleweather.data.remote.WeatherRestClient
 import com.dimowner.simpleweather.data.repository.Repository
 import com.dimowner.simpleweather.data.repository.RepositoryImpl
+import com.dimowner.simpleweather.domain.location.LocationProvider
 import com.dimowner.simpleweather.domain.main.WeatherContract
 import com.dimowner.simpleweather.domain.main.WeatherPresenter
 import com.dimowner.simpleweather.domain.metrics.MetricsContract
@@ -58,8 +60,14 @@ class AppModule(
 
 	@Provides
 	@Singleton
-	internal fun provideRestClient(): RestClient {
-		return RestClient()
+	internal fun provideWeatherRestClient(): WeatherRestClient {
+		return WeatherRestClient()
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideGeocodeRestClient(): GeocodeRestClient {
+		return GeocodeRestClient()
 	}
 
 	@Provides
@@ -77,6 +85,11 @@ class AppModule(
 		return WeatherPresenter(repository, prefs, context)
 	}
 
+//	@Provides
+//	internal fun provideLocationPresenter(repository: Repository, prefs: Prefs, context: Context): WeatherContract.UserActionsListener {
+//		return WeatherPresenter(repository, prefs, context)
+//	}
+
 	@Provides
 	@Singleton
 	internal fun provideLocalRepository(appDatabase: AppDatabase): LocalRepository {
@@ -85,7 +98,7 @@ class AppModule(
 
 	@Provides
 	@Singleton
-	internal fun provideRemoteRepository(restClient: RestClient): RemoteRepository {
+	internal fun provideRemoteRepository(restClient: WeatherRestClient): RemoteRepository {
 		return RemoteRepository(restClient.weatherApi)
 	}
 
@@ -94,6 +107,12 @@ class AppModule(
 	internal fun provideRepository(localRepository: LocalRepository,
 								   remoteRepository: RemoteRepository): Repository {
 		return RepositoryImpl(localRepository, remoteRepository)
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideLocationProvider(context: Context, geocodeRestClient: GeocodeRestClient): LocationProvider {
+		return LocationProvider(context, geocodeRestClient.geocodeApi)
 	}
 
 	@Provides

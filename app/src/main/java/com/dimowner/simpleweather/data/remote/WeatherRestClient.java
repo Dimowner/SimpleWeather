@@ -30,7 +30,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-public class RestClient {
+public class WeatherRestClient {
 
 	private static final String SERVER_URL = "http://api.openweathermap.org/data";
 	private static final String VERSION = "2.5";
@@ -38,7 +38,7 @@ public class RestClient {
 
 	private WeatherApi weatherApi;
 
-	public RestClient() {
+	public WeatherRestClient() {
 		createWeatherApi();
 	}
 
@@ -62,7 +62,6 @@ public class RestClient {
 				.build();
 
 		weatherApi = retrofit.create(WeatherApi.class);
-		new Object();
 	}
 
 	public WeatherApi getWeatherApi() {

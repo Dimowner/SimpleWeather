@@ -9,6 +9,7 @@ ext.versions = [
       minSdkVersion   : 16,
       buildtools      : "27.0.1",
       support         : "27.1.0",
+      gmsVersion      : "11.8.0",
 
       // Components
       constraintlayout: "1.1.+",
@@ -36,7 +37,7 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 5
-def versionPatch = 0
+def versionPatch = 1
 
 android {
     compileSdkVersion versions.targetSdkVersion
@@ -73,6 +74,15 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$versions.support"
     implementation "com.android.support:design:$versions.support"
     implementation "com.android.support:support-annotations:$versions.support"
+
+    implementation "com.google.android.gms:play-services-maps:$versions.gmsVersion"
+    implementation "com.google.android.gms:play-services-places:$versions.gmsVersion"
+    implementation "com.google.android.gms:play-services-places:$versions.gmsVersion"
+    implementation "com.google.android.gms:play-services-location:$versions.gmsVersion"
+    implementation "com.google.android.gms:play-services-gcm:$versions.gmsVersion"
+    implementation "com.google.android.gms:play-services-maps:$versions.gmsVersion"
+
+    implementation 'com.patloew.rxlocation:rxlocation:1.0.4'
 
     // Android: Components
     implementation "com.android.support.constraint:constraint-layout:$versions.constraintlayout"

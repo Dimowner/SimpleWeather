@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
-import com.dimowner.simpleweather.ui.main.MainActivity
 import com.dimowner.simpleweather.domain.metrics.MetricsContract
 import com.dimowner.simpleweather.domain.welcome.WelcomePresenter
+import com.dimowner.simpleweather.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class WelcomeActivity : AppCompatActivity(), MetricsContract.View {
 		txtTempFormat.setOnClickListener{ presenter.switchTemperature() }
 		txtPressure.setOnClickListener{ presenter.switchPressure() }
 		txtTimeFormat.setOnClickListener{ presenter.switchTimeFormat() }
-		buttonNext.setOnClickListener {
+		btnApply.setOnClickListener {
 			presenter.firstRunExecuted()
 			startActivity(Intent(applicationContext, MainActivity::class.java))
 			finish()

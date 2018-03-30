@@ -197,18 +197,19 @@
 			android:drawablePadding="@dimen/spacing_normal"
 			android:background="?android:attr/selectableItemBackground"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/buttonNext"
+			app:layout_constraintBottom_toTopOf="@+id/btnApply"
 			app:layout_constraintTop_toBottomOf="@+id/txtPressure"
 			tools:text="24H"
 			/>
 
 	<Button
-			android:id="@+id/buttonNext"
+			android:id="@+id/btnApply"
 			style="@style/Button"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:contentDescription="@null"
 			android:text="@string/btn_apply"
+			android:padding="@dimen/spacing_normal"
 			android:background="?android:attr/selectableItemBackground"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
