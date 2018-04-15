@@ -25,7 +25,7 @@
 
 	<application
 			android:name=".SWApplication"
-			android:allowBackup="true"
+			android:allowBackup="false"
 			android:icon="@mipmap/simple_weather_logo"
 			android:label="@string/app_name"
 			android:roundIcon="@mipmap/simple_weather_logo"
