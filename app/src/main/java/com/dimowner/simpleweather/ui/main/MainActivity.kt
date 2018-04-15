@@ -19,15 +19,13 @@
 
 package com.dimowner.simpleweather.ui.main
 
+import android.app.Activity
+import android.app.Fragment
+import android.app.FragmentManager
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
-import android.view.Menu
 import android.view.MenuItem
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
@@ -35,16 +33,19 @@ import com.dimowner.simpleweather.data.Prefs
 import com.dimowner.simpleweather.data.periodic.UpdateManager
 import com.dimowner.simpleweather.ui.settings.SettingsActivity
 import com.dimowner.simpleweather.ui.welcome.WelcomeActivity
+import com.dimowner.simpleweather.utils.AppStartTracker
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import java.util.ArrayList
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
+class MainActivity : Activity(), ViewPager.OnPageChangeListener {
 
 	private val ITEM_TODAY = 0
 	private val ITEM_TOMORROW = 1
 	private val ITEM_TWO_WEEKS = 2
+
+	private lateinit var tracker: AppStartTracker
 
 	@Inject lateinit var prefs: Prefs
 
@@ -67,13 +68,19 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
+		tracker = SWApplication.getAppStartTracker(applicationContext)
+		tracker.activityOnCreate()
 		setTheme(R.style.AppTheme)
 		super.onCreate(savedInstanceState)
+		tracker.activityContentViewBefore()
 		setContentView(R.layout.activity_main)
+		tracker.activityContentViewAfter()
 
-		setSupportActionBar(toolbar)
+//		setSupportActionBar(toolbar)
 
 		SWApplication.get(applicationContext).applicationComponent().inject(this)
+
+		btnSettings.setOnClickListener{ startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
 
 		if (prefs.isFirstRun()) {
 			startActivity(Intent(applicationContext, WelcomeActivity::class.java))
@@ -83,7 +90,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TODAY))
 			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TOMORROW))
 			fragments.add(WeatherTwoWeeksFragment())
-			val adapter = MyPagerAdapter(supportFragmentManager, fragments)
+			val adapter = MyPagerAdapter(fragmentManager, fragments)
 			pager.adapter = adapter
 			pager.addOnPageChangeListener(this)
 
@@ -98,6 +105,17 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 			Timber.v("alarm is NOT running")
 			UpdateManager.startPeriodicUpdates(applicationContext)
 		}
+		tracker.activityOnCreateEnd()
+	}
+
+	override fun onStart() {
+		super.onStart()
+		tracker.activityOnStart()
+	}
+
+	override fun onResume() {
+		super.onResume()
+		tracker.activityOnResume()
 	}
 
 	override fun onPageScrollStateChanged(state: Int) {}
@@ -115,27 +133,27 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 		prevMenuItem = bottomNavigation.menu.getItem(position)
 	}
 
-	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-		menuInflater.inflate(R.menu.menu_main, menu)
-		return super.onCreateOptionsMenu(menu)
-	}
-
-	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-		if (item != null) {
-//			if (item.itemId == R.id.action_locate) {
-//				//Locate
-//				startActivity(Intent(applicationContext, WelcomeActivity::class.java))
-//			} else
-			if (item.itemId == R.id.action_settings) {
-				startActivity(Intent(applicationContext, SettingsActivity::class.java))
-			}
-		}
-		return super.onOptionsItemSelected(item)
-	}
+//	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//		menuInflater.inflate(R.menu.menu_main, menu)
+//		return super.onCreateOptionsMenu(menu)
+//	}
+//
+//	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+//		if (item != null) {
+////			if (item.itemId == R.id.action_locate) {
+////				//Locate
+////				startActivity(Intent(applicationContext, WelcomeActivity::class.java))
+////			} else
+//			if (item.itemId == R.id.action_settings) {
+//				startActivity(Intent(applicationContext, SettingsActivity::class.java))
+//			}
+//		}
+//		return super.onOptionsItemSelected(item)
+//	}
 
 	private class MyPagerAdapter internal constructor(
 			fm: FragmentManager,
-			private val fragments: List<Fragment>) : FragmentStatePagerAdapter(fm) {
+			private val fragments: List<Fragment>) : MyStatePagerAdapter(fm) {
 
 		override fun getItem(position: Int): Fragment {
 			return fragments[position]

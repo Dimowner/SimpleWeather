@@ -19,8 +19,12 @@
 
 package com.dimowner.simpleweather.ui.settings
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.text.Html
+import android.text.SpannableStringBuilder
 import android.view.MenuItem
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
@@ -28,16 +32,17 @@ import com.dimowner.simpleweather.domain.metrics.MetricsContract
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
 
-class SettingsActivity : AppCompatActivity(), MetricsContract.View  {
+class SettingsActivity : Activity(), MetricsContract.View  {
 
 	@Inject lateinit var presenter : MetricsContract.UserActionsListener
+
+	private val VERSION_UNAVAILABLE = "N/A"
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_settings)
 
-		setSupportActionBar(toolbar)
-		supportActionBar?.setDisplayHomeAsUpEnabled(true)
+		btnNavUp.setOnClickListener{finish()}
 
 		SWApplication.get(applicationContext).applicationComponent().inject(this)
 
@@ -59,15 +64,24 @@ class SettingsActivity : AppCompatActivity(), MetricsContract.View  {
 	}
 
 	private fun showAboutDialog() {
-		val fm = supportFragmentManager
-		val ft = fm.beginTransaction()
-		val prev = fm.findFragmentByTag("dialog_about")
-		if (prev != null) {
-			ft.remove(prev)
+		// Get app version
+		val versionName: String
+		versionName = try {
+			val info = this.packageManager.getPackageInfo(packageName, 0)
+			info.versionName
+		} catch (e: PackageManager.NameNotFoundException) {
+			VERSION_UNAVAILABLE
 		}
-		ft.addToBackStack(null)
-		val dialog = AboutDialog()
-		dialog.show(ft, "dialog_about")
+
+		val aboutBody = SpannableStringBuilder()
+		aboutBody.append(Html.fromHtml(getString(R.string.about_body, versionName)))
+
+		AlertDialog.Builder(this)
+				.setTitle(R.string.nav_about)
+				.setMessage(aboutBody)
+				.setPositiveButton(R.string.btn_ok, { dialog, whichButton -> dialog.dismiss() })
+				.create()
+				.show()
 	}
 
 	override fun onDestroy() {

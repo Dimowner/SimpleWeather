@@ -20,11 +20,11 @@
 package com.dimowner.simpleweather.ui.location
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import com.dimowner.simpleweather.R
@@ -53,7 +53,7 @@ import android.widget.AdapterView
 import kotlin.collections.ArrayList
 
 
-class LocationActivity : AppCompatActivity(), LocationContract.View {
+class LocationActivity : Activity(), LocationContract.View {
 
 	private val MAP_ZOOM = 12f
 

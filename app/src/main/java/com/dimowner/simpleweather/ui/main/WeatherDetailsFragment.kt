@@ -19,9 +19,9 @@
 
 package com.dimowner.simpleweather.ui.main
 
+import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,7 +94,7 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 	}
 
 	override fun showWeatherIcon(url: String) {
-		Glide.with(context)
+		Glide.with(activity.applicationContext)
 				.load(url)
 				.into(weatherIcon)
 	}

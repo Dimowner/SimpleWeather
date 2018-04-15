@@ -24,19 +24,45 @@
 		android:orientation="vertical"
 		tools:context="com.dimowner.simpleweather.ui.main.MainActivity">
 
-	<android.support.v7.widget.Toolbar
+	<!--<android.support.v7.widget.Toolbar-->
+			<!--android:id="@+id/toolbar"-->
+			<!--android:layout_width="match_parent"-->
+			<!--android:layout_height="wrap_content"-->
+			<!--android:background="@android:color/transparent"-->
+			<!--android:minHeight="?attr/actionBarSize"-->
+			<!--android:theme="?attr/actionBarTheme"-->
+			<!--app:titleTextAppearance="@style/Toolbar.TitleText"-->
+			<!--app:contentInsetStart="?attr/actionBarInsetStart"-->
+			<!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
+			<!--app:title="@string/tittle_settings"-->
+			<!--app:layout_constraintTop_toTopOf="parent"-->
+			<!--/>-->
+
+	<FrameLayout
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="@android:color/transparent"
-			android:minHeight="?attr/actionBarSize"
-			android:theme="?attr/actionBarTheme"
-			app:titleTextAppearance="@style/Toolbar.TitleText"
-			app:contentInsetStart="?attr/actionBarInsetStart"
-			app:popupTheme="@style/AppTheme.PopupOverlay"
-			app:title="@string/tittle_settings"
-			app:layout_constraintTop_toTopOf="parent"
-			/>
+			app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+				style="@style/Text.SectionLabel"
+				android:layout_width="match_parent"
+				android:layout_height="56dp"
+				android:textColor="@color/text_primary_light"
+				android:text="@string/tittle_settings"
+				android:gravity="center"
+				/>
+
+		<ImageButton
+				android:id="@+id/btnNavUp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@null"
+				android:layout_gravity="start|left"
+				android:background="?android:selectableItemBackground"
+				android:padding="@dimen/spacing_normal"
+				android:src="@drawable/arrow_left"/>
+	</FrameLayout>
 
 	<TextView
 			android:id="@+id/windLabel"

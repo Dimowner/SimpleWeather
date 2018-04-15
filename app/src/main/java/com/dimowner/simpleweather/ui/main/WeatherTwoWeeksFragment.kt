@@ -19,9 +19,9 @@
 
 package com.dimowner.simpleweather.ui.main
 
+import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +50,7 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 		super.onViewCreated(view, savedInstanceState)
 
 		recyclerView.setHasFixedSize(true)
-		recyclerView.layoutManager = LinearLayoutManager(context)
+		recyclerView.layoutManager = LinearLayoutManager(activity.applicationContext)
 		recyclerView.adapter = adapter
 
 		presenter.bindView(this)

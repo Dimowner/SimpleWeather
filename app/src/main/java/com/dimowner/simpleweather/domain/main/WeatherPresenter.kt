@@ -46,7 +46,7 @@ class WeatherPresenter(
 
 	override fun unbindView() {
 		this.view = null
-		this.disposable?.dispose()
+		this.disposable.dispose()
 	}
 
 	override fun locate() {

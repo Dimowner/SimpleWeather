@@ -24,17 +24,41 @@
 		android:clipToPadding="false"
 		android:orientation="vertical">
 
-	<android.support.v7.widget.Toolbar
-			android:id="@+id/toolbar"
+	<!--<android.support.v7.widget.Toolbar-->
+			<!--android:id="@+id/toolbar"-->
+			<!--android:layout_width="match_parent"-->
+			<!--android:layout_height="wrap_content"-->
+			<!--android:background="@android:color/transparent"-->
+			<!--android:minHeight="?attr/actionBarSize"-->
+			<!--android:theme="?attr/actionBarTheme"-->
+			<!--app:titleTextAppearance="@style/Toolbar.TitleText"-->
+			<!--app:contentInsetStart="@dimen/spacing_double"-->
+			<!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
+			<!--app:title="Kyiv, Ukraine"/>-->
+
+	<FrameLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="@android:color/transparent"
-			android:minHeight="?attr/actionBarSize"
-			android:theme="?attr/actionBarTheme"
-			app:titleTextAppearance="@style/Toolbar.TitleText"
-			app:contentInsetStart="@dimen/spacing_double"
-			app:popupTheme="@style/AppTheme.PopupOverlay"
-			app:title="Kyiv, Ukraine"/>
+			android:layout_height="wrap_content">
+		<TextView
+				style="@style/Text.SectionLabel"
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="56dp"
+				android:textColor="@color/text_primary_light"
+				android:text="Kyiv, Ukraine"
+				android:gravity="center"
+				app:layout_constraintTop_toTopOf="parent"
+				/>
+		<ImageButton
+				android:id="@+id/btnSettings"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@null"
+				android:layout_gravity="end|right"
+				android:background="?android:selectableItemBackground"
+				android:padding="@dimen/spacing_normal"
+				android:src="@drawable/tune"/>
+	</FrameLayout>
 
 	<android.support.v4.view.ViewPager
 			android:id="@+id/pager"

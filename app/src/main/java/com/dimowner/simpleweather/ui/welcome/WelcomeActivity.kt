@@ -1,8 +1,8 @@
 package com.dimowner.simpleweather.ui.welcome
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.domain.metrics.MetricsContract
@@ -11,7 +11,7 @@ import com.dimowner.simpleweather.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 import javax.inject.Inject
 
-class WelcomeActivity : AppCompatActivity(), MetricsContract.View {
+class WelcomeActivity : Activity(), MetricsContract.View {
 
 	@Inject lateinit var presenter : WelcomePresenter
 

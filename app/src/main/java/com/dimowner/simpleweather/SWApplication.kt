@@ -24,9 +24,12 @@ import android.content.Context
 import com.dimowner.simpleweather.dagger.application.AppComponent
 import com.dimowner.simpleweather.dagger.application.AppModule
 import com.dimowner.simpleweather.dagger.application.DaggerAppComponent
+import com.dimowner.simpleweather.utils.AppStartTracker
 import timber.log.Timber
 
 class SWApplication : Application() {
+
+	private val startTracker = AppStartTracker()
 
 	private val appComponent: AppComponent by lazy {
 		DaggerAppComponent
@@ -36,10 +39,6 @@ class SWApplication : Application() {
 	}
 
 	override fun onCreate() {
-		super.onCreate()
-
-		appComponent.inject(this)
-
 		if (BuildConfig.DEBUG) {
 			//Timber initialization
 			Timber.plant(object : Timber.DebugTree() {
@@ -48,12 +47,23 @@ class SWApplication : Application() {
 				}
 			})
 		}
+		startTracker.appOnCreate()
+		super.onCreate()
+		appComponent.inject(this)
 	}
 
 	companion object {
 		fun get(context: Context): SWApplication {
 			return context.applicationContext as SWApplication
 		}
+
+		fun getAppStartTracker(context: Context): AppStartTracker {
+			return (context as SWApplication).getStartTracker()
+		}
+	}
+
+	private fun getStartTracker(): AppStartTracker {
+		return startTracker
 	}
 
 	override fun onLowMemory() {
