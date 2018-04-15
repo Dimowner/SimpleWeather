@@ -24,7 +24,7 @@ import android.app.Fragment
 import android.app.FragmentManager
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
+//import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.view.MenuItem
 import com.dimowner.simpleweather.R
@@ -51,21 +51,21 @@ class MainActivity : Activity(), ViewPager.OnPageChangeListener {
 
 	private var prevMenuItem: MenuItem? = null
 
-	private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-		item.isChecked = true
-		when (item.itemId) {
-			R.id.nav_today -> {
-				pager.setCurrentItem(ITEM_TODAY, true)
-			}
-			R.id.nav_tomorrow -> {
-				pager.setCurrentItem(ITEM_TOMORROW, true)
-			}
-			R.id.nav_two_weeks -> {
-				pager.setCurrentItem(ITEM_TWO_WEEKS, true)
-			}
-		}
-		false
-	}
+//	private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+//		item.isChecked = true
+//		when (item.itemId) {
+//			R.id.nav_today -> {
+//				pager.setCurrentItem(ITEM_TODAY, true)
+//			}
+//			R.id.nav_tomorrow -> {
+//				pager.setCurrentItem(ITEM_TOMORROW, true)
+//			}
+//			R.id.nav_two_weeks -> {
+//				pager.setCurrentItem(ITEM_TWO_WEEKS, true)
+//			}
+//		}
+//		false
+//	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		tracker = SWApplication.getAppStartTracker(applicationContext)
@@ -94,7 +94,7 @@ class MainActivity : Activity(), ViewPager.OnPageChangeListener {
 			pager.adapter = adapter
 			pager.addOnPageChangeListener(this)
 
-			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+//			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 		}
 
 		if (UpdateManager.checkPeriodicUpdatesRunning(applicationContext)) {
@@ -122,15 +122,15 @@ class MainActivity : Activity(), ViewPager.OnPageChangeListener {
 	override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
 	override fun onPageSelected(position: Int) {
-		if (prevMenuItem != null) {
-			prevMenuItem?.isChecked = false
-		}
-		else {
-			bottomNavigation.menu.getItem(0).isChecked = false
-		}
-
-		bottomNavigation.menu.getItem(position).isChecked = true
-		prevMenuItem = bottomNavigation.menu.getItem(position)
+//		if (prevMenuItem != null) {
+//			prevMenuItem?.isChecked = false
+//		}
+//		else {
+//			bottomNavigation.menu.getItem(0).isChecked = false
+//		}
+//
+//		bottomNavigation.menu.getItem(position).isChecked = true
+//		prevMenuItem = bottomNavigation.menu.getItem(position)
 	}
 
 //	override fun onCreateOptionsMenu(menu: Menu?): Boolean {

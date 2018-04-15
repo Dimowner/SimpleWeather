@@ -30,5 +30,5 @@
 	<item
 			android:id="@+id/action_settings"
 			android:title="@string/btn_settings"
-			app:showAsAction="never"/>
+			android:showAsAction="never"/>
 </menu>

@@ -74,16 +74,16 @@
 			android:background="@color/colorPrimaryDark"
 			/>
 
-	<android.support.design.widget.BottomNavigationView
-			android:id="@+id/bottomNavigation"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_gravity="bottom"
-			android:background="@color/colorPrimary"
-			android:elevation="@dimen/toolbar_elevation"
-			app:menu="@menu/menu_bottom_navigation"
-			app:itemIconTint="@drawable/bottom_nav_selector"
-			app:itemTextColor="@drawable/bottom_nav_selector"
-			/>
+	<!--<android.support.design.widget.BottomNavigationView-->
+			<!--android:id="@+id/bottomNavigation"-->
+			<!--android:layout_width="match_parent"-->
+			<!--android:layout_height="wrap_content"-->
+			<!--android:layout_gravity="bottom"-->
+			<!--android:background="@color/colorPrimary"-->
+			<!--android:elevation="@dimen/toolbar_elevation"-->
+			<!--app:menu="@menu/menu_bottom_navigation"-->
+			<!--app:itemIconTint="@drawable/bottom_nav_selector"-->
+			<!--app:itemTextColor="@drawable/bottom_nav_selector"-->
+			<!--/>-->
 
 </LinearLayout>

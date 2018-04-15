@@ -17,9 +17,9 @@
 <resources>
 
 	<style name="AppTheme" parent="android:ThemeOverlay.Material">
-		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="android:colorPrimary">@color/colorPrimary</item>
 		<item name="android:colorPrimaryDark">@color/colorPrimary</item>
-		<item name="colorAccent">@color/colorAccent</item>
+		<item name="android:colorAccent">@color/colorAccent</item>
 
 		<item name="android:windowActionBar">false</item>
 		<item name="android:windowNoTitle">true</item>

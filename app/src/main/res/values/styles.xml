@@ -31,24 +31,24 @@
 		<!--<item name="android:windowTranslucentStatus">true</item>-->
 	</style>
 
-	<style name="ToolbarTransparent" parent="@style/ThemeOverlay.AppCompat.Dark">
-		<item name="android:textColor">@color/colorPrimary</item> 
-		<item name="android:textColorPrimary">@color/colorPrimary</item> 
-		<item name="android:textColorSecondary">@color/colorPrimary</item>
-	</style>
+	<!--<style name="ToolbarTransparent" parent="@style/ThemeOverlay.AppCompat.Dark">-->
+		<!--<item name="android:textColor">@color/colorPrimary</item> -->
+		<!--<item name="android:textColorPrimary">@color/colorPrimary</item> -->
+		<!--<item name="android:textColorSecondary">@color/colorPrimary</item>-->
+	<!--</style>-->
 
-	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+	<!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>-->
 
-	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+	<!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>-->
 
 	<style name="AppTheme.BrandedLaunch" parent="AppTheme">
 		<item name="android:windowBackground">@drawable/branded_logo</item>
 	</style>
 
-	<style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-		<item name="android:textSize">20sp</item>
-		<item name="android:fontFamily">sans-serif-light</item>
-	</style>
+	<!--<style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">-->
+		<!--<item name="android:textSize">20sp</item>-->
+		<!--<item name="android:fontFamily">sans-serif-light</item>-->
+	<!--</style>-->
 
 	<style name="Text">
 		<item name="android:textColor">@color/text_primary_light</item>
@@ -70,7 +70,7 @@
 
 	<style name="Text.Subheader">
 		<item name="android:gravity">center_vertical</item>
-		<item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+		<!--<item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>-->
 		<item name="android:textColor">@color/text_secondary_light</item>
 	</style>
 

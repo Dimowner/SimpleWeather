@@ -21,11 +21,12 @@ package com.dimowner.simpleweather.ui.main
 
 import android.app.Fragment
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+//import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.data.local.room.WeatherEntity
@@ -68,11 +69,13 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 	}
 
 	override fun showError(message: String) {
-		Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
+//		Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
+		Toast.makeText(activity.applicationContext, message, Toast.LENGTH_LONG).show()
 	}
 
 	override fun showError(resId: Int) {
-		Snackbar.make(container, resId, Snackbar.LENGTH_LONG).show()
+		Toast.makeText(activity.applicationContext, resId, Toast.LENGTH_LONG).show()
+//		Snackbar.make(container, resId, Snackbar.LENGTH_LONG).show()
 	}
 	override fun showDate(date: String) {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
