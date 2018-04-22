@@ -19,12 +19,10 @@
 
 package com.dimowner.simpleweather.ui.main
 
-import android.app.Activity
-import android.app.Fragment
-import android.app.FragmentManager
 import android.content.Intent
 import android.os.Bundle
-//import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v4.view.ViewPager
 import android.view.MenuItem
 import com.dimowner.simpleweather.R
@@ -39,7 +37,7 @@ import timber.log.Timber
 import java.util.ArrayList
 import javax.inject.Inject
 
-class MainActivity : Activity(), ViewPager.OnPageChangeListener {
+class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 
 	private val ITEM_TODAY = 0
 	private val ITEM_TOMORROW = 1
@@ -90,7 +88,7 @@ class MainActivity : Activity(), ViewPager.OnPageChangeListener {
 			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TODAY))
 			fragments.add(WeatherDetailsFragment.newInstance(WeatherDetailsFragment.TYPE_TOMORROW))
 			fragments.add(WeatherTwoWeeksFragment())
-			val adapter = MyPagerAdapter(fragmentManager, fragments)
+			val adapter = MyStatePagerAdapter(supportFragmentManager, fragments)
 			pager.adapter = adapter
 			pager.addOnPageChangeListener(this)
 
@@ -150,17 +148,17 @@ class MainActivity : Activity(), ViewPager.OnPageChangeListener {
 //		}
 //		return super.onOptionsItemSelected(item)
 //	}
-
-	private class MyPagerAdapter internal constructor(
-			fm: FragmentManager,
-			private val fragments: List<Fragment>) : MyStatePagerAdapter(fm) {
-
-		override fun getItem(position: Int): Fragment {
-			return fragments[position]
-		}
-
-		override fun getCount(): Int {
-			return fragments.size
-		}
-	}
+//
+//	private class MyPagerAdapter internal constructor(
+//			fm: FragmentManager,
+//			private val fragments: List<Fragment>) : MyStatePagerAdapter(fm) {
+//
+//		override fun getItem(position: Int): Fragment {
+//			return fragments[position]
+//		}
+//
+//		override fun getCount(): Int {
+//			return fragments.size
+//		}
+//	}
 }

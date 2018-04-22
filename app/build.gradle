@@ -8,8 +8,8 @@ ext.versions = [
 		targetSdkVersion: 27,
 		minSdkVersion   : 16,
 		buildtools      : "27.0.1",
-		support         : "27.1.0",
-		gmsVersion      : "11.8.0",
+		support         : "27.1.1",
+		gmsVersion      : "15.0.0",
 
 		// Components
 		constraintlayout: "1.1.+",
@@ -37,7 +37,7 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 5
-def versionPatch = 3
+def versionPatch = 4
 
 android {
 	compileSdkVersion versions.targetSdkVersion

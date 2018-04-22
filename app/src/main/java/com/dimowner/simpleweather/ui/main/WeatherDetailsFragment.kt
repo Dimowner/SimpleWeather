@@ -19,9 +19,8 @@
 
 package com.dimowner.simpleweather.ui.main
 
-import android.app.Fragment
 import android.os.Bundle
-//import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,12 +53,12 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val view = inflater.inflate(R.layout.fragment_weather_details, container, false)
-		SWApplication.get(view.context).applicationComponent().inject(this)
 		return view
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		SWApplication.get(view.context).applicationComponent().inject(this)
 		weatherIcon.setOnClickListener{ presenter.updateWeather(arguments?.getInt(ARG_KEY_TYPE) ?: TYPE_TODAY) }
 		presenter.bindView(this)
 	}
@@ -95,7 +94,7 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 	}
 
 	override fun showWeatherIcon(url: String) {
-		Glide.with(activity.applicationContext)
+		Glide.with(activity?.applicationContext)
 				.load(url)
 				.into(weatherIcon)
 	}
@@ -113,12 +112,12 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 	}
 
 	override fun showError(message: String) {
-		Toast.makeText(activity.applicationContext, message, Toast.LENGTH_LONG).show()
+		Toast.makeText(activity?.applicationContext, message, Toast.LENGTH_LONG).show()
 //		Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
 	}
 
 	override fun showError(resId: Int) {
-		Toast.makeText(activity.applicationContext, resId, Toast.LENGTH_LONG).show()
+		Toast.makeText(activity?.applicationContext, resId, Toast.LENGTH_LONG).show()
 //		Snackbar.make(container, resId, Snackbar.LENGTH_LONG).show()
 	}
 }

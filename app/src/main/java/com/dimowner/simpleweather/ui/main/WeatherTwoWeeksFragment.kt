@@ -19,9 +19,8 @@
 
 package com.dimowner.simpleweather.ui.main
 
-import android.app.Fragment
 import android.os.Bundle
-//import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +42,6 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val view = inflater.inflate(R.layout.fragment_weather_two_weeks, container, false)
-		SWApplication.get(view.context).applicationComponent().inject(this)
 		return view
 	}
 
@@ -51,11 +49,17 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 		super.onViewCreated(view, savedInstanceState)
 
 		recyclerView.setHasFixedSize(true)
-		recyclerView.layoutManager = LinearLayoutManager(activity.applicationContext)
+		recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
 		recyclerView.adapter = adapter
 
+		SWApplication.get(view.context).applicationComponent().inject(this)
 		presenter.bindView(this)
 		presenter.updateWeatherTwoWeeks()
+	}
+
+	override fun onDestroyView() {
+		super.onDestroyView()
+		presenter.unbindView()
 	}
 
 	override fun showTwoWeeksWeather(list: List<WeatherEntity>) {
@@ -70,11 +74,11 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 
 	override fun showError(message: String) {
 //		Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
-		Toast.makeText(activity.applicationContext, message, Toast.LENGTH_LONG).show()
+		Toast.makeText(activity?.applicationContext, message, Toast.LENGTH_LONG).show()
 	}
 
 	override fun showError(resId: Int) {
-		Toast.makeText(activity.applicationContext, resId, Toast.LENGTH_LONG).show()
+		Toast.makeText(activity?.applicationContext, resId, Toast.LENGTH_LONG).show()
 //		Snackbar.make(container, resId, Snackbar.LENGTH_LONG).show()
 	}
 	override fun showDate(date: String) {

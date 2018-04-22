@@ -1,18 +1,19 @@
 package com.dimowner.simpleweather.ui.main;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class MyStatePagerAdapter extends PagerAdapter {
+public class MyStatePagerAdapter extends PagerAdapter {
 	private static final String TAG = "MyStatePagerAdapter";
 	private static final boolean DEBUG = false;
 
@@ -21,16 +22,25 @@ public abstract class MyStatePagerAdapter extends PagerAdapter {
 
 	private ArrayList<Fragment.SavedState> mSavedState = new ArrayList<Fragment.SavedState>();
 	private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
+	private List<Fragment> fragmentList;
 	private Fragment mCurrentPrimaryItem = null;
 
-	public MyStatePagerAdapter(FragmentManager fm) {
+	public MyStatePagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
 		mFragmentManager = fm;
+		this.fragmentList = fragments;
 	}
 
 	/**
 	 * Return the Fragment associated with a specified position.
 	 */
-	public abstract Fragment getItem(int position);
+	public Fragment getItem(int position) {
+		return fragmentList.get(position);
+	}
+
+	@Override
+	public int getCount() {
+		return fragmentList.size();
+	}
 
 	@Override
 	public void startUpdate(ViewGroup container) {
@@ -58,7 +68,7 @@ public abstract class MyStatePagerAdapter extends PagerAdapter {
 		}
 
 		Fragment fragment = getItem(position);
-		if (DEBUG) Log.v(TAG, "Adding item #" + position + ": f=" + fragment);
+//		if (DEBUG) Log.v(TAG, "Adding item #" + position + ": f=" + fragment);
 		if (mSavedState.size() > position) {
 			Fragment.SavedState fss = mSavedState.get(position);
 			if (fss != null) {
@@ -78,21 +88,6 @@ public abstract class MyStatePagerAdapter extends PagerAdapter {
 
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-		Fragment fragment = (Fragment) object;
-
-		if (mCurTransaction == null) {
-			mCurTransaction = mFragmentManager.beginTransaction();
-		}
-		if (DEBUG) Log.v(TAG, "Removing item #" + position + ": f=" + object
-				+ " v=" + ((Fragment)object).getView());
-		while (mSavedState.size() <= position) {
-			mSavedState.add(null);
-		}
-		mSavedState.set(position, fragment.isAdded()
-				? mFragmentManager.saveFragmentInstanceState(fragment) : null);
-		mFragments.set(position, null);
-
-		mCurTransaction.remove(fragment);
 	}
 
 	@Override

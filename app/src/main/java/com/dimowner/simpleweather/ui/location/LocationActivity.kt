@@ -84,8 +84,6 @@ class LocationActivity : Activity(), LocationContract.View {
 				}
 		)
 
-//		val names = arrayOf("Иван", "Марья", "Петр", "Антон", "Даша")
-
 		list.adapter = adapter
 		list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 			inputCity.setText(adapter.getItem(position))
