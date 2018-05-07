@@ -57,6 +57,11 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 		presenter.updateWeatherTwoWeeks()
 	}
 
+	override fun onResume() {
+		super.onResume()
+		presenter.updateTemperatureFormat()
+	}
+
 	override fun onDestroyView() {
 		super.onDestroyView()
 		presenter.unbindView()
@@ -81,6 +86,11 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 		Toast.makeText(activity?.applicationContext, resId, Toast.LENGTH_LONG).show()
 //		Snackbar.make(container, resId, Snackbar.LENGTH_LONG).show()
 	}
+
+	override fun setTemperatureFormat(format: Int) {
+		adapter.setTemperatureFormat(format)
+	}
+
 	override fun showDate(date: String) {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}

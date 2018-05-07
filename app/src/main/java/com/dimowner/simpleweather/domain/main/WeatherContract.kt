@@ -41,6 +41,8 @@ interface WeatherContract {
 		fun showWeatherIconRes(resId: Int)
 
 		fun showTwoWeeksWeather(list: List<WeatherEntity>)
+
+		fun setTemperatureFormat(format: Int)
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<WeatherContract.View> {
@@ -50,5 +52,7 @@ interface WeatherContract {
 		fun updateWeather(type: Int)
 
 		fun updateWeatherTwoWeeks()
+
+		fun updateTemperatureFormat()
 	}
 }

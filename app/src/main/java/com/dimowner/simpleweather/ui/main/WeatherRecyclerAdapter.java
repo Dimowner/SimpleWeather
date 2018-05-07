@@ -50,6 +50,8 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 	private ItemClickListener itemClickListener;
 
+	private int temperatureFormat = Constants.TEMP_FORMAT_CELSIUS;
+
 	public WeatherRecyclerAdapter() {
 		mShowingData = new ArrayList<>();
 	}
@@ -84,7 +86,7 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 		ItemViewHolder holder = (ItemViewHolder) h;
 		holder.name.setText(TimeUtils.formatTime(mShowingData.get(pos).getDt()*1000, Constants.TIME_FORMAT_24H));
 		holder.description.setText(mShowingData.get(pos).getDescription());
-		holder.txtTemp.setText(WeatherUtils.formatTemp(mShowingData.get(pos).getTemp(), Constants.TEMP_FORMAT_CELSIUS));
+		holder.txtTemp.setText(WeatherUtils.formatTemp(mShowingData.get(pos).getTemp(), temperatureFormat));
 //		Glide.with(holder.view.getContext())
 //				.load(Constants.WEATHER_ICON_URL + mShowingData.get(pos).getIcon() + Constants.PNG)
 //				.apply(RequestOptions.circleCropTransform())
@@ -120,6 +122,10 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 	public void setData(List<WeatherEntity> data) {
 		this.mShowingData = data;
 		notifyDataSetChanged();
+	}
+
+	public void setTemperatureFormat(int temperatureFormat) {
+		this.temperatureFormat = temperatureFormat;
 	}
 
 	public void setItemClickListener(ItemClickListener itemClickListener) {

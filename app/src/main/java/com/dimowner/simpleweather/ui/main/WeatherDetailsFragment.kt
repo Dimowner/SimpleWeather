@@ -107,6 +107,10 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
+	override fun setTemperatureFormat(format: Int) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
 	override fun showProgress() {
 		progress.visibility = View.VISIBLE
 	}

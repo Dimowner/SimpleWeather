@@ -67,6 +67,10 @@ class WeatherPresenter(
 				}))
 	}
 
+	override fun updateTemperatureFormat() {
+		view?.setTemperatureFormat(prefs.getTempFormat())
+	}
+
 	override fun updateWeather(type: Int) {
 		view?.showProgress()
 		if (type == WeatherDetailsFragment.TYPE_TODAY) {

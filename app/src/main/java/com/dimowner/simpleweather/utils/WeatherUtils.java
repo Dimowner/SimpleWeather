@@ -82,6 +82,10 @@ public class WeatherUtils {
 				return R.drawable.d10d;
 			case "11d":
 				return R.drawable.d11d;
+			case "13d":
+				return R.drawable.d13d;
+			case "50d":
+				return R.drawable.d50d;
 
 			case "01n":
 				return R.drawable.d01n;
@@ -97,6 +101,11 @@ public class WeatherUtils {
 				return R.drawable.d10n;
 			case "11n":
 				return R.drawable.d11n;
+			case "13n":
+				return R.drawable.d13n;
+			case "50n":
+				return R.drawable.d50n;
+
 			default:
 				return R.drawable.loadscreen;
 		}
