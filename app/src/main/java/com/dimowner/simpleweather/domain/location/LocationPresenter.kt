@@ -19,21 +19,88 @@
 
 package com.dimowner.simpleweather.domain.location
 
-class LocationPresenter : LocationContract.UserActionsListener {
+import android.os.Bundle
+import com.dimowner.simpleweather.data.Prefs
+import com.google.android.gms.common.api.GoogleApiClient
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
+
+class LocationPresenter(
+		private val locationDataModel: LocationProvider,
+		private val prefs: Prefs
+	) : LocationContract.UserActionsListener {
+
+	private var view: LocationContract.View? = null
+	private var isCitySelected : Boolean = false
 
 	override fun bindView(view: LocationContract.View) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		this.view = view
+		locationDataModel.connect(
+				object : GoogleApiClient.ConnectionCallbacks {
+					override fun onConnected(bundle: Bundle?) {
+						Timber.v("onConnected")
+					}
+
+					override fun onConnectionSuspended(i: Int) {
+						Timber.v("onConnectionSuspended")
+					}
+				}
+		)
+
+		view.showSelectedCity(prefs.getCity())
+		if (prefs.getLatitude() != 0.0 && prefs.getLongitude() != 0.0) {
+			view.showMapMarker(Location("", prefs.getLatitude(), prefs.getLongitude()))
+		}
 	}
 
 	override fun unbindView() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		view = null
+		locationDataModel.disconnect()
 	}
 
 	override fun locate() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		locationDataModel.findLocation()
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe({ location ->
+					view?.showMapMarker(location)
+					prefs.saveLatitude(location.lat)
+					prefs.saveLongitude(location.lng)
+					isCitySelected = true
+					view?.showSelectedCity(location.address)
+					prefs.saveCity(location.address)
+				}, {Timber.e(it)})
 	}
 
-	override fun setCity(city: String) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun findCity(city: String) {
+		if (!isCitySelected) {
+			locationDataModel.findPlace(city)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe({
+						view?.showPredictions(it)
+					}, { Timber.e(it) })
+		}
+	}
+
+	override fun findLocationForCity(city: String) {
+		isCitySelected = true
+		view?.showSelectedCity(city)
+		prefs.saveCity(city)
+		locationDataModel.findLocationForCityName(city)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe({ location ->
+					view?.showMapMarker(location)
+					prefs.saveLatitude(location.lat)
+					prefs.saveLongitude(location.lng)
+				}, {
+					t -> Timber.e(t)
+					view?.showError(if (t.message != null) t.message!! else "Error on find location for city")
+				})
+	}
+
+	override fun setCitySelected(b: Boolean) {
+		isCitySelected = b
 	}
 }

@@ -85,11 +85,6 @@ class AppModule(
 		return WeatherPresenter(repository, prefs, context)
 	}
 
-//	@Provides
-//	internal fun provideLocationPresenter(repository: Repository, prefs: Prefs, context: Context): WeatherContract.UserActionsListener {
-//		return WeatherPresenter(repository, prefs, context)
-//	}
-
 	@Provides
 	@Singleton
 	internal fun provideLocalRepository(appDatabase: AppDatabase): LocalRepository {

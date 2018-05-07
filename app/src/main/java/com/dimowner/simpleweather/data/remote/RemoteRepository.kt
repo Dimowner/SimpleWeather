@@ -31,28 +31,28 @@ class RemoteRepository (
 		private val weatherApi: WeatherApi
 	): Repository {
 
-	override fun getWeatherToday(): Single<WeatherEntity> {
-		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY)
+	override fun getWeatherToday(city: String): Single<WeatherEntity> {
+		return weatherApi.getWeather(city, Constants.OPEN_WEATHER_MAP_API_KEY)
 				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
 	}
 
-	override fun getWeatherTomorrow(): Single<WeatherEntity> {
-		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY)
+	override fun getWeatherTomorrow(city: String): Single<WeatherEntity> {
+		return weatherApi.getWeather(city, Constants.OPEN_WEATHER_MAP_API_KEY)
 				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
 	}
 
-	override fun subscribeWeatherToday(): Flowable<WeatherEntity> {
-		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
+	override fun subscribeWeatherToday(city: String): Flowable<WeatherEntity> {
+		return weatherApi.getWeather(city, Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
 				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TODAY, w) }
 	}
 
-	override fun subscribeWeatherTomorrow(): Flowable<WeatherEntity> {
-		return weatherApi.getWeather("Kyiv", Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
+	override fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity> {
+		return weatherApi.getWeather(city, Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
 				.map{ w -> Mapper.convertWeatherResponseToEntity(AppDatabase.ITEM_TYPE_TOMORROW, w) }
 	}
 
-	override fun subscribeWeatherTwoWeeks(): Flowable<List<WeatherEntity>> {
-		return weatherApi.getWeatherFewDays("Kyiv", 14, Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
+	override fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>> {
+		return weatherApi.getWeatherFewDays(city, 14, Constants.OPEN_WEATHER_MAP_API_KEY).toFlowable()
 				.map{ w -> Mapper.convertWeatherListResponseToEntityList(AppDatabase.ITEM_TYPE_TWO_WEEKS, w) }
 	}
 

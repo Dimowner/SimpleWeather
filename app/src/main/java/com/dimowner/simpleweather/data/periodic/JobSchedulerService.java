@@ -24,6 +24,7 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 
 import com.dimowner.simpleweather.SWApplication;
+import com.dimowner.simpleweather.data.Prefs;
 import com.dimowner.simpleweather.data.repository.Repository;
 
 import javax.inject.Inject;
@@ -37,15 +38,16 @@ public class JobSchedulerService extends JobService {
 	private static boolean isPeriodic = true;
 
 	@Inject Repository repository;
+	@Inject Prefs prefs;
 
 	@Override
 	public boolean onStartJob(JobParameters params) {
 		SWApplication.Companion.get(getApplicationContext()).applicationComponent().inject(this);
-		repository.getWeatherToday()
+		repository.getWeatherToday(prefs.getCity())
 				.subscribeOn(Schedulers.io())
 				.subscribe(data -> {}, Timber::e);
 
-		repository.getWeatherTomorrow()
+		repository.getWeatherTomorrow(prefs.getCity())
 				.subscribeOn(Schedulers.io())
 				.subscribe(data -> {}, Timber::e);
 

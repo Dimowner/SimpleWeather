@@ -30,14 +30,10 @@ import android.text.TextWatcher
 import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.domain.location.LocationContract
-import com.dimowner.simpleweather.domain.location.LocationProvider
 import com.dimowner.simpleweather.ui.main.MainActivity
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_location.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -49,7 +45,10 @@ import android.widget.TextView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import com.dimowner.simpleweather.dagger.location.LocationModule
+import com.dimowner.simpleweather.domain.location.Location
 import kotlin.collections.ArrayList
 
 
@@ -59,34 +58,32 @@ class LocationActivity : Activity(), LocationContract.View {
 
 	val REQ_CODE_LOCATION = 303
 
-//	@Inject lateinit var presenter : LocationContract.UserActionsListener
+	@Inject lateinit var presenter : LocationContract.UserActionsListener
 
-	@Inject lateinit var locationDataModel: LocationProvider
-
-	val adapter : MySimpleArrayAdapter by lazy { MySimpleArrayAdapter(Collections.emptyList(), this) }
-
-//	private val locationDataModel : LocationSource by lazy {LocationSource(applicationContext, null)}
+	private val adapter : MySimpleArrayAdapter by lazy { MySimpleArrayAdapter(Collections.emptyList(), this) }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_location)
-		SWApplication.get(applicationContext).applicationComponent().inject(this)
 
-		locationDataModel.connect(
-				object : GoogleApiClient.ConnectionCallbacks {
-					override fun onConnected(bundle: Bundle?) {
-						Timber.v("onConnected")
-					}
+		SWApplication.get(applicationContext)
+				.applicationComponent()
+				.plus(LocationModule())
+				.injectLocationActivity(this)
 
-					override fun onConnectionSuspended(i: Int) {
-						Timber.v("onConnectionSuspended")
-					}
-				}
-		)
+		presenter.bindView(this)
 
 		list.adapter = adapter
 		list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-			inputCity.setText(adapter.getItem(position))
+			presenter.findLocationForCity(adapter.getItem(position))
+
+			// Hide keyboard:
+			val v = this.currentFocus
+			if (v != null) {
+				val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+				imm.hideSoftInputFromWindow(v.windowToken, 0)
+			}
+
 			adapter.clear()
 		}
 
@@ -95,17 +92,17 @@ class LocationActivity : Activity(), LocationContract.View {
 
 		btnLocate.setOnClickListener{
 			if (checkLocatePermission()) {
-				findLocation()
+				presenter.locate()
 			}
 		}
 
 		mapView.onCreate(null)
 		btnApply.setOnClickListener {
-//			presenter.firstRunExecuted()
 			startActivity(Intent(applicationContext, MainActivity::class.java))
 			finish()
 		}
 
+		inputCity.setOnClickListener{ presenter.setCitySelected(false) }
 		inputCity.addTextChangedListener(object : TextWatcher {
 			override fun afterTextChanged(p0: Editable?) {}
 			override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -113,20 +110,13 @@ class LocationActivity : Activity(), LocationContract.View {
 			override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 				if (p0 != null && p0.isNotEmpty()) {
 					Timber.v("onTextChanged: %s", p0.toString())
-					locationDataModel.findPlace(p0.toString())
-							.observeOn(AndroidSchedulers.mainThread())
-							.subscribe({
-								Timber.v("Predictions: %s", it.toString())
-								adapter.setItems(it)
-							}, {Timber.e(it)})
+					presenter.findCity(p0.toString())
 				} else {
 					Timber.v("Empty address str")
 				}
 
 			}
 		})
-
-//		presenter.bindView(this)
 	}
 
 	private fun checkLocatePermission(): Boolean {
@@ -142,24 +132,12 @@ class LocationActivity : Activity(), LocationContract.View {
 	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 		if (requestCode == REQ_CODE_LOCATION && grantResults.isNotEmpty()
 				&& grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//			presenter.recordingClicked()
-			findLocation()
+			presenter.locate()
 		}
 	}
 
-	private fun findLocation() {
-		locationDataModel.findLocation()
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe({ location ->
-					mapView.getMapAsync({map ->
-						Timber.v("onLocate location %s", location.toString())
-						map.clear()
-						val latLng = LatLng(location.lat, location.lng)
-						map.addMarker(MarkerOptions().position(latLng))
-						map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM))
-					})
-				}, {Timber.e(it)})
+	override fun showSelectedCity(city: String) {
+		inputCity.setText(city)
 	}
 
 	override fun onStart() {
@@ -184,17 +162,23 @@ class LocationActivity : Activity(), LocationContract.View {
 
 	override fun onDestroy() {
 		super.onDestroy()
-//		presenter.unbindView()
-		locationDataModel.disconnect()
+		presenter.unbindView()
 		mapView.onDestroy()
 	}
 
-	override fun showMapMarker() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun showMapMarker(location: Location) {
+		mapView.getMapAsync({map ->
+			Timber.v("showMapMarker location %s", location.toString())
+			map.clear()
+			val latLng = LatLng(location.lat, location.lng)
+			map.addMarker(MarkerOptions().position(latLng))
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM))
+		})
 	}
 
-	override fun showPredictions(temp: String) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun showPredictions(list: List<String>) {
+		Timber.v("Predictions: %s", list.toString())
+		adapter.setItems(list)
 	}
 
 	override fun showProgress() {}

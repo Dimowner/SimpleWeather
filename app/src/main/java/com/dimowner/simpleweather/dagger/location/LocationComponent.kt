@@ -17,29 +17,14 @@
  *  the License.
  */
 
-package com.dimowner.simpleweather.domain.location
+package com.dimowner.simpleweather.dagger.location
 
-import com.dimowner.simpleweather.ui.Contract
+import com.dimowner.simpleweather.ui.location.LocationActivity
+import dagger.Subcomponent
 
-interface LocationContract : Contract {
+@Subcomponent(modules = arrayOf(LocationModule::class))
+@LocationScope
+interface LocationComponent {
 
-	interface View : Contract.View {
-
-		fun showMapMarker(location: Location)
-
-		fun showSelectedCity(city: String)
-
-		fun showPredictions(list: List<String>)
-	}
-
-	interface UserActionsListener : Contract.UserActionsListener<LocationContract.View> {
-
-		fun locate()
-
-		fun findCity(city: String)
-
-		fun findLocationForCity(city: String)
-
-		fun setCitySelected(b: Boolean)
-	}
+	fun injectLocationActivity(locationActivity: LocationActivity)
 }

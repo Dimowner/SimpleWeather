@@ -36,7 +36,6 @@ import com.patloew.rxlocation.RxLocation
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
-import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.io.IOException
@@ -130,11 +129,14 @@ class LocationProvider(
 					}
 				}
 				.map { location ->
-					Timber.v("location %s", location.toString())
-					Timber.v("Addresses %s", fromLocation(context, location.latitude, location.longitude))
-					location
+					val list = fromLocation(context, location.latitude, location.longitude)
+					if (list.isNotEmpty()) {
+						Location(list[0].locality, location.latitude, location.longitude)
+					} else {
+						Location("", location.latitude, location.longitude)
+					}
+
 				}
-				.flatMap { location -> getPlaceByLatLng(location.latitude, location.longitude) }
 	}
 
 	fun findPlace(address: String): Single<List<String>> {
@@ -218,9 +220,31 @@ class LocationProvider(
 				emptyList()
 			}
 		} else {
-			Timber.v("Geocoder is not present")
+			Timber.e("Geocoder is not present")
 			return emptyList()
 		}
 	}
 
+	fun findLocationForCityName(city : String) : Single<Location> {
+		return Single.just(city).map {
+			if (Geocoder.isPresent()) {
+				val geocoder = Geocoder(context)
+				try {
+					val result : List<Address> = geocoder.getFromLocationName(city, 1)
+					if (result.isNotEmpty()) {
+						Location(result[0].locality, result[0].latitude, result[0].longitude)
+					} else {
+						Timber.e("Nothing found")
+						Location("", 0.0, 0.0)
+					}
+				} catch (e: IOException) {
+					Timber.e(e)
+					Location("", 0.0, 0.0)
+				}
+			} else {
+				Timber.e("Geocoder is not present")
+				Location("", 0.0, 0.0)
+			}
+		}
+	}
 }

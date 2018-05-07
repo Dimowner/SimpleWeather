@@ -7,6 +7,7 @@ import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.domain.metrics.MetricsContract
 import com.dimowner.simpleweather.domain.welcome.WelcomePresenter
+import com.dimowner.simpleweather.ui.location.LocationActivity
 import com.dimowner.simpleweather.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 import javax.inject.Inject
@@ -26,7 +27,7 @@ class WelcomeActivity : Activity(), MetricsContract.View {
 		txtTimeFormat.setOnClickListener{ presenter.switchTimeFormat() }
 		btnApply.setOnClickListener {
 			presenter.firstRunExecuted()
-			startActivity(Intent(applicationContext, MainActivity::class.java))
+			startActivity(Intent(applicationContext, LocationActivity::class.java))
 			finish()
 		}
 

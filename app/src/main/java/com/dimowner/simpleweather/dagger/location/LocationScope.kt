@@ -17,29 +17,10 @@
  *  the License.
  */
 
-package com.dimowner.simpleweather.domain.location
+package com.dimowner.simpleweather.dagger.location
 
-import com.dimowner.simpleweather.ui.Contract
+import javax.inject.Scope
 
-interface LocationContract : Contract {
-
-	interface View : Contract.View {
-
-		fun showMapMarker(location: Location)
-
-		fun showSelectedCity(city: String)
-
-		fun showPredictions(list: List<String>)
-	}
-
-	interface UserActionsListener : Contract.UserActionsListener<LocationContract.View> {
-
-		fun locate()
-
-		fun findCity(city: String)
-
-		fun findLocationForCity(city: String)
-
-		fun setCitySelected(b: Boolean)
-	}
-}
+@Scope
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+annotation class LocationScope

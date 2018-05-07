@@ -25,15 +25,15 @@ import io.reactivex.Single
 
 interface Repository {
 
-	fun getWeatherToday(): Single<WeatherEntity>
+	fun getWeatherToday(city: String): Single<WeatherEntity>
 
-	fun getWeatherTomorrow(): Single<WeatherEntity>
+	fun getWeatherTomorrow(city: String): Single<WeatherEntity>
 
-	fun subscribeWeatherToday(): Flowable<WeatherEntity>
+	fun subscribeWeatherToday(city: String): Flowable<WeatherEntity>
 
-	fun subscribeWeatherTomorrow(): Flowable<WeatherEntity>
+	fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity>
 
-	fun subscribeWeatherTwoWeeks(): Flowable<List<WeatherEntity>>
+	fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>>
 
 	fun cacheWeather(entity: WeatherEntity)
 

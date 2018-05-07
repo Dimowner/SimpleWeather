@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.dimowner.simpleweather.SWApplication;
+import com.dimowner.simpleweather.data.Prefs;
 import com.dimowner.simpleweather.data.repository.Repository;
 
 import javax.inject.Inject;
@@ -34,15 +35,16 @@ import timber.log.Timber;
 public class UpdatesReceiver  extends BroadcastReceiver {
 
 	@Inject Repository repository;
+	@Inject Prefs prefs;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		SWApplication.Companion.get(context).applicationComponent().inject(this);
-		repository.getWeatherToday()
+		repository.getWeatherToday(prefs.getCity())
 					.subscribeOn(Schedulers.io())
 					.subscribe(data -> {}, Timber::e);
 
-		repository.getWeatherTomorrow()
+		repository.getWeatherTomorrow(prefs.getCity())
 				.subscribeOn(Schedulers.io())
 				.subscribe(data -> {}, Timber::e);
 	}

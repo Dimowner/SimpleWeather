@@ -29,6 +29,7 @@ import com.dimowner.simpleweather.R
 import com.dimowner.simpleweather.SWApplication
 import com.dimowner.simpleweather.data.Prefs
 import com.dimowner.simpleweather.data.periodic.UpdateManager
+import com.dimowner.simpleweather.ui.location.LocationActivity
 import com.dimowner.simpleweather.ui.settings.SettingsActivity
 import com.dimowner.simpleweather.ui.welcome.WelcomeActivity
 import com.dimowner.simpleweather.utils.AppStartTracker
@@ -103,6 +104,10 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 			Timber.v("alarm is NOT running")
 			UpdateManager.startPeriodicUpdates(applicationContext)
 		}
+
+		toolbar.text = prefs.getCity()
+		toolbar.setOnClickListener{ startActivity(Intent(applicationContext, LocationActivity::class.java)) }
+
 		tracker.activityOnCreateEnd()
 	}
 
@@ -114,6 +119,7 @@ class MainActivity : FragmentActivity(), ViewPager.OnPageChangeListener {
 	override fun onResume() {
 		super.onResume()
 		tracker.activityOnResume()
+		toolbar.text = prefs.getCity()
 	}
 
 	override fun onPageScrollStateChanged(state: Int) {}

@@ -32,51 +32,51 @@ class RepositoryImpl(
 		private val remoteRepository: RemoteRepository
 	) : Repository {
 
-	override fun getWeatherToday(): Single<WeatherEntity> {
-		return remoteRepository.getWeatherToday()
+	override fun getWeatherToday(city: String): Single<WeatherEntity> {
+		return remoteRepository.getWeatherToday(city)
 				.subscribeOn(Schedulers.io())
 				.flatMap { data ->
 					localRepository.cacheWeather(data)
-					localRepository.getWeatherToday().subscribeOn(Schedulers.io())
+					localRepository.getWeatherToday(city).subscribeOn(Schedulers.io())
 				}
 	}
 
-	override fun getWeatherTomorrow(): Single<WeatherEntity> {
-		return remoteRepository.getWeatherTomorrow()
+	override fun getWeatherTomorrow(city: String): Single<WeatherEntity> {
+		return remoteRepository.getWeatherTomorrow(city)
 				.subscribeOn(Schedulers.io())
 				.flatMap { data ->
 					localRepository.cacheWeather(data)
-					localRepository.getWeatherTomorrow().subscribeOn(Schedulers.io())
+					localRepository.getWeatherTomorrow(city).subscribeOn(Schedulers.io())
 				}
 	}
 
-	override fun subscribeWeatherToday(): Flowable<WeatherEntity> {
-		remoteRepository.getWeatherToday()
+	override fun subscribeWeatherToday(city: String): Flowable<WeatherEntity> {
+		remoteRepository.getWeatherToday(city)
 				.subscribeOn(Schedulers.io())
 				.subscribe({response ->
 					localRepository.cacheWeather(response)
 				}, Timber::e)
-		return localRepository.subscribeWeatherToday()
+		return localRepository.subscribeWeatherToday(city)
 				.subscribeOn(Schedulers.io())
 	}
 
-	override fun subscribeWeatherTomorrow(): Flowable<WeatherEntity> {
-		remoteRepository.subscribeWeatherTomorrow()
+	override fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity> {
+		remoteRepository.subscribeWeatherTomorrow(city)
 				.subscribeOn(Schedulers.io())
 				.subscribe({response ->
 					localRepository.cacheWeather(response)
 				}, Timber::e)
-		return localRepository.subscribeWeatherTomorrow()
+		return localRepository.subscribeWeatherTomorrow(city)
 				.subscribeOn(Schedulers.io())
 	}
 
-	override fun subscribeWeatherTwoWeeks(): Flowable<List<WeatherEntity>> {
-		remoteRepository.subscribeWeatherTwoWeeks()
+	override fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>> {
+		remoteRepository.subscribeWeatherTwoWeeks(city)
 				.subscribeOn(Schedulers.io())
 				.subscribe({response ->
 					localRepository.cacheWeather(response)
 				}, Timber::e)
-		return localRepository.subscribeWeatherTwoWeeks()
+		return localRepository.subscribeWeatherTwoWeeks(city)
 				.subscribeOn(Schedulers.io())
 	}
 

@@ -27,23 +27,23 @@ import io.reactivex.Single
 
 class LocalRepository(private val appDatabase: AppDatabase) : Repository {
 
-	override fun getWeatherToday(): Single<WeatherEntity> {
+	override fun getWeatherToday(city: String): Single<WeatherEntity> {
 		return appDatabase.weatherDao().getWeatherToday()
 	}
 
-	override fun getWeatherTomorrow(): Single<WeatherEntity> {
+	override fun getWeatherTomorrow(city: String): Single<WeatherEntity> {
 		return appDatabase.weatherDao().getWeatherTomorrow()
 	}
 
-	override fun subscribeWeatherToday(): Flowable<WeatherEntity> {
+	override fun subscribeWeatherToday(city: String): Flowable<WeatherEntity> {
 		return appDatabase.weatherDao().subscribeWeatherToday()
 	}
 
-	override fun subscribeWeatherTomorrow(): Flowable<WeatherEntity> {
+	override fun subscribeWeatherTomorrow(city: String): Flowable<WeatherEntity> {
 		return appDatabase.weatherDao().subscribeWeatherTomorrow()
 	}
 
-	override fun subscribeWeatherTwoWeeks(): Flowable<List<WeatherEntity>> {
+	override fun subscribeWeatherTwoWeeks(city: String): Flowable<List<WeatherEntity>> {
 		return appDatabase.weatherDao().subscribeWeatherTwoWeeks()
 	}
 

@@ -55,7 +55,7 @@ class WeatherPresenter(
 
 	override fun updateWeatherTwoWeeks() {
 		view?.showProgress()
-		disposable.add(repository.subscribeWeatherTwoWeeks()
+		disposable.add(repository.subscribeWeatherTwoWeeks(prefs.getCity())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({d ->
 					view?.showTwoWeeksWeather(d)
@@ -70,7 +70,7 @@ class WeatherPresenter(
 	override fun updateWeather(type: Int) {
 		view?.showProgress()
 		if (type == WeatherDetailsFragment.TYPE_TODAY) {
-			disposable.add(repository.subscribeWeatherToday()
+			disposable.add(repository.subscribeWeatherToday(prefs.getCity())
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe({
 						showData(it)
@@ -81,7 +81,7 @@ class WeatherPresenter(
 						view?.showError(it.message!!)
 					}))
 		} else if (type == WeatherDetailsFragment.TYPE_TOMORROW) {
-			disposable.add(repository.subscribeWeatherTomorrow()
+			disposable.add(repository.subscribeWeatherTomorrow(prefs.getCity())
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe({
 						showData(it)

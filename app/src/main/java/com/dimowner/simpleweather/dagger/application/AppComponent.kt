@@ -21,6 +21,8 @@ package com.dimowner.simpleweather.dagger.application
 
 import com.dimowner.simpleweather.ui.main.MainActivity
 import com.dimowner.simpleweather.SWApplication
+import com.dimowner.simpleweather.dagger.location.LocationComponent
+import com.dimowner.simpleweather.dagger.location.LocationModule
 import com.dimowner.simpleweather.data.periodic.JobSchedulerService
 import com.dimowner.simpleweather.data.periodic.UpdatesReceiver
 import com.dimowner.simpleweather.ui.location.LocationActivity
@@ -39,8 +41,6 @@ interface AppComponent {
 
 	fun inject(activity: WelcomeActivity)
 
-	fun inject(activity: LocationActivity)
-
 	fun inject(activity: MainActivity)
 
 	fun inject(activity: SettingsActivity)
@@ -53,4 +53,5 @@ interface AppComponent {
 
 	fun inject(service: JobSchedulerService)
 
+	fun plus(detailsModule: LocationModule): LocationComponent
 }

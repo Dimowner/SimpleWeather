@@ -33,6 +33,9 @@ class Prefs constructor(context: Context){
 	private val PREF_KEY_WIND_FORMAT = "wind_format"
 	private val PREF_KEY_PRESSURE_FORMAT = "pressure_format"
 	private val PREF_KEY_TIME_FORMAT = "time_format"
+	private val PREF_KEY_CITY = "city"
+	private val PREF_KEY_LATITUDE = "latitude"
+	private val PREF_KEY_LONGITUDE = "longitude"
 
 	private var preferences : SharedPreferences by Delegates.notNull()
 
@@ -106,4 +109,27 @@ class Prefs constructor(context: Context){
 		return preferences.getInt(PREF_KEY_TIME_FORMAT, Constants.TIME_FORMAT_24H)
 	}
 
+	fun saveCity(city : String) {
+		preferences.edit().putString(PREF_KEY_CITY, city).apply()
+	}
+
+	fun getCity() : String {
+		return preferences.getString(PREF_KEY_CITY, "")
+	}
+
+	fun saveLatitude(lat : Double) {
+		preferences.edit().putLong(PREF_KEY_LATITUDE, java.lang.Double.doubleToRawLongBits(lat)).apply()
+	}
+
+	fun getLatitude() : Double {
+		return java.lang.Double.longBitsToDouble(preferences.getLong(PREF_KEY_LATITUDE, 0))
+	}
+
+	fun saveLongitude(lng : Double) {
+		preferences.edit().putLong(PREF_KEY_LONGITUDE, java.lang.Double.doubleToRawLongBits(lng)).apply()
+	}
+
+	fun getLongitude() : Double {
+		return java.lang.Double.longBitsToDouble(preferences.getLong(PREF_KEY_LONGITUDE, 0))
+	}
 }
