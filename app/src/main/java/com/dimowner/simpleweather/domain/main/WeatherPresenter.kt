@@ -102,6 +102,7 @@ class WeatherPresenter(
 		view?.showHumidity(WeatherUtils.formatHumidity(entity.humidity, context))
 		view?.showPressure(WeatherUtils.formatPressure(entity.pressure, prefs.getPressureFormat(), context))
 
-		view?.showWeatherIcon(Constants.WEATHER_ICON_URL + entity.icon + Constants.PNG)
+//		view?.showWeatherIcon(Constants.WEATHER_ICON_URL + entity.icon + Constants.PNG)
+		view?.showWeatherIconRes(WeatherUtils.weatherIconCodeToResource(entity.icon))
 	}
 }

@@ -104,4 +104,8 @@ class WeatherTwoWeeksFragment : Fragment(), WeatherContract.View {
 	override fun showWeatherIcon(url: String) {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
+
+	override fun showWeatherIconRes(resId: Int) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
 }

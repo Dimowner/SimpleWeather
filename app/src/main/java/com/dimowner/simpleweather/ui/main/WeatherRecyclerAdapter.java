@@ -85,24 +85,25 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 		holder.name.setText(TimeUtils.formatTime(mShowingData.get(pos).getDt()*1000, Constants.TIME_FORMAT_24H));
 		holder.description.setText(mShowingData.get(pos).getDescription());
 		holder.txtTemp.setText(WeatherUtils.formatTemp(mShowingData.get(pos).getTemp(), Constants.TEMP_FORMAT_CELSIUS));
-		Glide.with(holder.view.getContext())
-				.load(Constants.WEATHER_ICON_URL + mShowingData.get(pos).getIcon() + Constants.PNG)
-				.apply(RequestOptions.circleCropTransform())
-				.listener(new RequestListener<Drawable>() {
-					@Override
-					public boolean onLoadFailed(@Nullable GlideException e, Object model,
-														 Target<Drawable> target, boolean isFirstResource) {
-						holder.image.setImageResource(R.drawable.loadscreen);
-						return false;
-					}
-
-					@Override
-					public boolean onResourceReady(Drawable resource, Object model,
-															 Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-						return false;
-					}
-				})
-				.into(holder.image);
+//		Glide.with(holder.view.getContext())
+//				.load(Constants.WEATHER_ICON_URL + mShowingData.get(pos).getIcon() + Constants.PNG)
+//				.apply(RequestOptions.circleCropTransform())
+//				.listener(new RequestListener<Drawable>() {
+//					@Override
+//					public boolean onLoadFailed(@Nullable GlideException e, Object model,
+//														 Target<Drawable> target, boolean isFirstResource) {
+//						holder.image.setImageResource(R.drawable.loadscreen);
+//						return false;
+//					}
+//
+//					@Override
+//					public boolean onResourceReady(Drawable resource, Object model,
+//															 Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//						return false;
+//					}
+//				})
+//				.into(holder.image);
+		holder.image.setImageResource(WeatherUtils.weatherIconCodeToResource(mShowingData.get(pos).getIcon()));
 
 		holder.view.setOnClickListener(v -> {
 			if (itemClickListener != null) {

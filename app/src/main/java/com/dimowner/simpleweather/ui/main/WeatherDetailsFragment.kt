@@ -99,6 +99,10 @@ class WeatherDetailsFragment : Fragment(), WeatherContract.View {
 				.into(weatherIcon)
 	}
 
+	override fun showWeatherIconRes(resId: Int) {
+		weatherIcon.setImageResource(resId)
+	}
+
 	override fun showTwoWeeksWeather(list: List<WeatherEntity>) {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}

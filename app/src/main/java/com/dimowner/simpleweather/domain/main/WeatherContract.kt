@@ -38,6 +38,8 @@ interface WeatherContract {
 
 		fun showWeatherIcon(url: String)
 
+		fun showWeatherIconRes(resId: Int)
+
 		fun showTwoWeeksWeather(list: List<WeatherEntity>)
 	}
 

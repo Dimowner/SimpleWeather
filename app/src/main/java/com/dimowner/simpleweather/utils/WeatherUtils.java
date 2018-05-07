@@ -66,4 +66,39 @@ public class WeatherUtils {
 		return (int)humidity + " " + context.getResources().getString(R.string.humidity_present);
 	}
 
+	public static int weatherIconCodeToResource(String code) {
+		switch (code) {
+			case "01d":
+				return R.drawable.d01d;
+			case "02d":
+				return R.drawable.d02d;
+			case "03d":
+				return R.drawable.d03d;
+			case "04d":
+				return R.drawable.d04d;
+			case "09d":
+				return R.drawable.d09d;
+			case "10d":
+				return R.drawable.d10d;
+			case "11d":
+				return R.drawable.d11d;
+
+			case "01n":
+				return R.drawable.d01n;
+			case "02n":
+				return R.drawable.d02n;
+			case "03n":
+				return R.drawable.d03n;
+			case "04n":
+				return R.drawable.d04n;
+			case "09n":
+				return R.drawable.d09n;
+			case "10n":
+				return R.drawable.d10n;
+			case "11n":
+				return R.drawable.d11n;
+			default:
+				return R.drawable.loadscreen;
+		}
+	}
 }
